@@ -1,0 +1,5 @@
+#!/bin/sh
+
+make -C lib -j
+# LDFLAGS="-L/opt/homebrew/lib/  -lm -liconv -framework CoreAudio -framework CoreVideo -framework Metal -framework AudioToolbox -framework CoreHaptics -framework GameController -framework ForceFeedback -framework OpenGL -lfreetype -framework AppKit -framework IOKit -framework Carbon -framework CoreGraphics -framework CoreHaptics -framework OpenAL -ObjC -lobjc" madlib run -t llvm src/Test.mad
+LDFLAGS="-framework CoreVideo -framework IOKit -framework Cocoa -framework GLUT -framework OpenGL" madlib run -t llvm src/Test.mad

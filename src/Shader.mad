@@ -1,0 +1,55 @@
+import type { Vector2, Vector3, Vector4 } from "./Math"
+
+type Shader = __Shader__
+export type Shader
+
+getShaderLocation :: Shader -> String -> Short
+getShaderLocation = extern "madraylib__shader__getShaderLocation"
+
+setShaderLocationFFI :: Shader -> Short -> a -> Short -> {}
+setShaderLocationFFI = extern "madraylib__shader__setShaderLocation"
+
+setShaderLocation :: Short -> String -> a -> Shader -> Shader
+setShaderLocation = (t, name, value, shader) => {
+  setShaderLocationFFI(shader, getShaderLocation(shader, name), value, t)
+  return shader
+}
+
+// typedef enum {
+//     SHADER_UNIFORM_FLOAT = 0,       // Shader uniform type: float
+//     SHADER_UNIFORM_VEC2,            // Shader uniform type: vec2 (2 float)
+//     SHADER_UNIFORM_VEC3,            // Shader uniform type: vec3 (3 float)
+//     SHADER_UNIFORM_VEC4,            // Shader uniform type: vec4 (4 float)
+//     SHADER_UNIFORM_INT,             // Shader uniform type: int
+//     SHADER_UNIFORM_IVEC2,           // Shader uniform type: ivec2 (2 int)
+//     SHADER_UNIFORM_IVEC3,           // Shader uniform type: ivec3 (3 int)
+//     SHADER_UNIFORM_IVEC4,           // Shader uniform type: ivec4 (4 int)
+//     SHADER_UNIFORM_SAMPLER2D        // Shader uniform type: sampler2d
+// } ShaderUniformDataType;
+
+setUniformFloat :: String -> Float -> Shader -> Shader
+export setUniformFloat = setShaderLocation(0)
+
+setUniformVec2 :: String -> Vector2 -> Shader -> Shader
+export setUniformVec2 = setShaderLocation(1)
+
+setUniformVec3 :: String -> Vector3 -> Shader -> Shader
+export setUniformVec3 = setShaderLocation(2)
+
+setUniformVec4 :: String -> Vector4 -> Shader -> Shader
+export setUniformVec4 = setShaderLocation(3)
+
+beginShaderMode :: Shader -> {}
+export beginShaderMode = extern "madraylib__shader__beginShaderMode"
+
+endShaderMode :: {} -> {}
+export endShaderMode = extern "madraylib__shader__endShaderMode"
+
+load :: String -> String -> Shader
+export load = extern "madraylib__shader__load"
+
+loadFromMemory :: String -> String -> Shader
+export loadFromMemory = extern "madraylib__shader__loadFromMemory"
+
+unloadShader :: Shader -> {}
+export unloadShader = extern "madraylib__shader__unloadShader"

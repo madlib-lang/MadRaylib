@@ -1,0 +1,22 @@
+#!/bin/sh
+mkdir -p .buildlibs
+mkdir -p lib/lib
+mkdir -p lib/include
+
+cd .buildlibs
+
+wget https://github.com/raysan5/raylib/archive/refs/tags/5.0.zip
+unzip 5.0.zip
+cd raylib-5.0
+cd src
+
+
+
+make PLATFORM=PLATFORM_DESKTOP
+cp libraylib.a ../../../lib/lib/
+cp *.h ../../../lib/include/
+
+cd ../../../
+
+# build libsfml.a
+make -C lib -j

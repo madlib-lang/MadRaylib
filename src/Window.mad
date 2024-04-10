@@ -1,0 +1,11 @@
+init :: Short -> Short -> String -> {}
+export init = extern "madraylib__window__init"
+
+setTargetFps :: Short -> {}
+export setTargetFps = extern "madraylib__window__setTargetFPS"
+
+shouldClose :: {} -> Boolean
+export shouldClose = extern "madraylib__window__shouldClose"
+
+close :: {} -> {}
+export close = extern "madraylib__window__close"

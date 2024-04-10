@@ -1,0 +1,10 @@
+import type {Color} from "./Color"
+
+begin :: {} -> {}
+export begin = extern "madraylib__draw__begin"
+
+end :: {} -> {}
+export end = extern "madraylib__draw__end"
+
+clearBackground :: Color -> {}
+export clearBackground = extern "madraylib__draw__clearBackground"

@@ -1,0 +1,10 @@
+import type { Color } from "./Color"
+import type { Vector2, Vector3 } from "./Math"
+
+
+
+drawTriangleStrip :: Array Vector2 -> Color -> {}
+export drawTriangleStrip = extern "madraylib__triangle__drawTriangleStrip"
+
+drawTriangleStrip3D :: Array Vector3 -> Color -> {}
+export drawTriangleStrip3D = extern "madraylib__triangle__drawTriangleStrip3D"

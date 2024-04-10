@@ -1,0 +1,20 @@
+// typedef struct Vector2 {
+//     float x;                // Vector x component
+//     float y;                // Vector y component
+// } Vector2;
+export alias Vector2 = { x :: Float, y :: Float }
+
+// typedef struct Vector3 {
+//     float x;                // Vector x component
+//     float y;                // Vector y component
+//     float z;                // Vector z component
+// } Vector3;
+export alias Vector3 = { x :: Float, y :: Float, z :: Float }
+
+// typedef struct Vector4 {
+//     float x;                // Vector x component
+//     float y;                // Vector y component
+//     float z;                // Vector z component
+//     float w;                // Vector w component
+// } Vector4;
+export alias Vector4 = { x :: Float, y :: Float, z :: Float, w :: Float }
