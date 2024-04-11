@@ -5,7 +5,6 @@
 #include "color.hpp"
 #include "gc.h"
 #include "number.hpp"
-#include "record.hpp"
 
 #ifdef __cplusplus
 extern "C" {

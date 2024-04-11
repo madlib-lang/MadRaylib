@@ -12,6 +12,7 @@ OBJS :=\
   $(BUILDDIR)/raylib.o                  \
   $(BUILDDIR)/rectangle.o               \
   $(BUILDDIR)/shader.o                  \
+  $(BUILDDIR)/texture.o                 \
   $(BUILDDIR)/triangle.o                \
   $(BUILDDIR)/window.o
 
