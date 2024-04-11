@@ -1,6 +1,6 @@
-#include "record.hpp"
 #include <raylib.h>
 
+#include "record.hpp"
 
 #ifdef __cplusplus
 extern "C" {

@@ -9,7 +9,9 @@ SRCDIR := src
 OBJS :=\
   $(BUILDDIR)/color.o                   \
   $(BUILDDIR)/draw.o                    \
+  $(BUILDDIR)/math.o                    \
   $(BUILDDIR)/raylib.o                  \
+  $(BUILDDIR)/rlgl.o                    \
   $(BUILDDIR)/rectangle.o               \
   $(BUILDDIR)/shader.o                  \
   $(BUILDDIR)/texture.o                 \

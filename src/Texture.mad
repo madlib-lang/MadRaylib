@@ -1,3 +1,9 @@
+import type { Color } from "./Color"
+import type { Vector2 } from "./Math"
+import type { Rectangle } from "./Rectangle"
+
+
+
 // typedef enum {
 //     PIXELFORMAT_UNCOMPRESSED_GRAYSCALE = 1, // 8 bit per pixel (no alpha)
 //     PIXELFORMAT_UNCOMPRESSED_GRAY_ALPHA,    // 8*2 bpp (2 channels)
@@ -43,3 +49,6 @@ export alias Texture = {
 
 load :: String -> Texture
 export load = extern "madraylib__texture__load"
+
+drawRec :: Texture -> Rectangle -> Vector2 -> Color -> {}
+export drawRec = extern "madraylib__texture__drawRec"

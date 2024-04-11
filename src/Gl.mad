@@ -1,0 +1,16 @@
+// translatef
+
+pushMatrix :: {} -> {}
+export pushMatrix = extern "rlPushMatrix"
+
+popMatrix :: {} -> {}
+export popMatrix = extern "rlPopMatrix"
+
+translatef :: Float -> Float -> Float -> {}
+export translatef = extern "madraylib__gl__translatef"
+
+rotatef :: Float -> Float -> Float -> Float -> {}
+export rotatef = extern "madraylib__gl__rotatef"
+
+scalef :: Float -> Float -> Float -> {}
+export scalef = extern "madraylib__gl__scalef"
