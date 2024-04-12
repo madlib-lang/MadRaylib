@@ -1,0 +1,22 @@
+import type { Color } from "./Color"
+import type { Vector2 } from "./Math"
+
+
+
+draw :: Float -> Float -> Float -> Color -> {}
+export draw = extern "madraylib__circle__draw"
+
+drawSector :: Vector2 -> Float -> Float -> Float -> Short -> Color -> {}
+export drawSector = extern "madraylib__circle__drawSector"
+
+drawGradient :: Float -> Float -> Float -> Color -> Color -> {}
+export drawGradient = extern "madraylib__circle__drawGradient"
+
+drawV :: Vector2 -> Float -> Color -> {}
+export drawV = extern "madraylib__circle__drawV"
+
+drawLines :: Float -> Float -> Float -> Color -> {}
+export drawLines = extern "madraylib__circle__drawLines"
+
+drawLinesV :: Vector2 -> Float -> Color -> {}
+export drawLinesV = extern "madraylib__circle__drawLinesV"

@@ -2,7 +2,8 @@
 
 #include <stdint.h>
 
-#include "color.hpp"
+#include "./color.hpp"
+#include "./math.hpp"
 #include "gc.h"
 #include "number.hpp"
 
@@ -41,25 +42,41 @@ madlib__record__Record_t *madraylib__rectangle__fromRaylib(Rectangle *rect) {
   return result;
 }
 
-Rectangle *madraylib__rectangle__toRaylib(madlib__record__Record_t *rectangle) {
-  Rectangle *res = (Rectangle *)GC_MALLOC_ATOMIC(sizeof(Rectangle));
-  res->x = (float)unboxDouble((double *)rectangle->fields[2]->value);
-  res->y = (float)unboxDouble((double *)rectangle->fields[3]->value);
-  res->width = (float)unboxDouble((double *)rectangle->fields[1]->value);
-  res->height = (float)unboxDouble((double *)rectangle->fields[0]->value);
-  return res;
-  // return {
-  //     .x = (float)unboxDouble((double *)rectangle->fields[2]->value),
-  //     .y = (float)unboxDouble((double *)rectangle->fields[3]->value),
-  //     .width = (float)unboxDouble((double *)rectangle->fields[1]->value),
-  //     .height = (float)unboxDouble((double *)rectangle->fields[0]->value),
-  // };
+Rectangle madraylib__rectangle__toRaylib(madlib__record__Record_t *rectangle) {
+  return {
+      .x = (float)unboxDouble((double *)rectangle->fields[2]->value),
+      .y = (float)unboxDouble((double *)rectangle->fields[3]->value),
+      .width = (float)unboxDouble((double *)rectangle->fields[1]->value),
+      .height = (float)unboxDouble((double *)rectangle->fields[0]->value),
+  };
+}
+
+void madraylib__rectangle__draw(double x, double y, double width, double height,
+                                madlib__record__Record_t *color) {
+  DrawRectangle(x, y, width, height, madraylib__color__toRaylib(color));
+}
+
+void madraylib__rectangle__drawV(madlib__record__Record_t *position,
+                                 madlib__record__Record_t *size,
+                                 madlib__record__Record_t *color) {
+  DrawRectangleV(madraylib__math__vector2ToRaylib(position),
+                 madraylib__math__vector2ToRaylib(size),
+                 madraylib__color__toRaylib(color));
+}
+
+void madraylib__rectangle__drawPro(madlib__record__Record_t *rec,
+                                   madlib__record__Record_t *origin,
+                                   double rotation,
+                                   madlib__record__Record_t *color) {
+  DrawRectanglePro(madraylib__rectangle__toRaylib(rec),
+                   madraylib__math__vector2ToRaylib(origin), rotation,
+                   madraylib__color__toRaylib(color));
 }
 
 void madraylib__rectangle__drawRectangleRec(madlib__record__Record_t *rectangle,
                                             madlib__record__Record_t *color) {
-  DrawRectangleRec(*madraylib__rectangle__toRaylib(rectangle),
-                   *madraylib__color__toRaylib(color));
+  DrawRectangleRec(madraylib__rectangle__toRaylib(rectangle),
+                   madraylib__color__toRaylib(color));
 }
 
 #ifdef __cplusplus

@@ -40,13 +40,13 @@ madlib__record__Record_t *madraylib__color__fromRaylib(Color *color) {
   return result;
 }
 
-Color *madraylib__color__toRaylib(madlib__record__Record_t *color) {
-  Color *c = (Color *)GC_MALLOC_ATOMIC(sizeof(Color));
-  c->r = (unsigned char)((int64_t)color->fields[3]->value);
-  c->g = (unsigned char)((int64_t)color->fields[2]->value);
-  c->b = (unsigned char)((int64_t)color->fields[1]->value);
-  c->a = (unsigned char)((int64_t)color->fields[0]->value);
-  return c;
+Color madraylib__color__toRaylib(madlib__record__Record_t *color) {
+  return {
+      .r = (unsigned char)((int64_t)color->fields[3]->value),
+      .g = (unsigned char)((int64_t)color->fields[2]->value),
+      .b = (unsigned char)((int64_t)color->fields[1]->value),
+      .a = (unsigned char)((int64_t)color->fields[0]->value),
+  };
 }
 
 #ifdef __cplusplus

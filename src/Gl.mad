@@ -14,3 +14,162 @@ export rotatef = extern "madraylib__gl__rotatef"
 
 scalef :: Float -> Float -> Float -> {}
 export scalef = extern "madraylib__gl__scalef"
+
+type BlendFactor
+  = Zero
+  | One
+  | SrcColor
+  | OneMinusSrcColor
+  | SrcAlpha
+  | OneMinusSrcAlpha
+  | DstAlpha
+  | OneMinusDstAlpha
+  | DstColor
+  | OneMinusDstColor
+  | SrcAlphaSaturate
+  | ConstantColor
+  | OneMinusConstantColor
+  | ConstantAlpha
+  | OneMinusConstantAlpha
+
+blendFactorToShort :: BlendFactor -> Short
+blendFactorToShort = where {
+  Zero =>
+    0
+
+  One =>
+    1
+
+  SrcColor =>
+    0x300_s
+
+  OneMinusSrcColor =>
+    0x301_s
+
+  SrcAlpha =>
+    0x302_s
+
+  OneMinusSrcAlpha =>
+    0x303_s
+
+  DstAlpha =>
+    0x304_s
+
+  OneMinusDstAlpha =>
+    0x305_s
+
+  DstColor =>
+    0x306_s
+
+  OneMinusDstColor =>
+    0x307_s
+
+  SrcAlphaSaturate =>
+    0x308_s
+
+  ConstantColor =>
+    0x8001_s
+
+  OneMinusConstantColor =>
+    0x8002_s
+
+  ConstantAlpha =>
+    0x8003_s
+
+  OneMinusConstantAlpha =>
+    0x8004_s
+}
+
+
+type BlendFunction
+  = Add
+  | Min
+  | Max
+  | Substract
+  | ReverseSubstract
+  | BlendEquation
+  | BlendEquationRGB
+  | BlendEquationAlpha
+  | BlendDstRgb
+  | BlendSrcRgb
+  | BlendDstAlpha
+  | BlendSrcAlpha
+  | BlendColor
+
+blendFunctionToShort :: BlendFunction -> Short
+blendFunctionToShort = where {
+  Add =>
+    0x8006_s
+
+  Min =>
+    0x8007_s
+
+  Max =>
+    0x8008_s
+
+  Substract =>
+    0x800A_s
+
+  ReverseSubstract =>
+    0x800B_s
+
+  BlendEquation =>
+    0x8009_s
+
+  BlendEquationRGB =>
+    0x8009_s
+
+  BlendEquationAlpha =>
+    0x883D_s
+
+  BlendDstRgb =>
+    0x80C8_s
+
+  BlendSrcRgb =>
+    0x80C9_s
+
+  BlendDstAlpha =>
+    0x80CA_s
+
+  BlendSrcAlpha =>
+    0x80CB_s
+
+  BlendColor =>
+    0x8005_s
+}
+
+setBlendFactorsFFI :: Short -> Short -> Short -> {}
+setBlendFactorsFFI = extern "madraylib__gl__setBlendFactors"
+
+setBlendFactors :: BlendFactor -> BlendFactor -> BlendFunction -> {}
+export setBlendFactors = (srcFactor, dstFactor, equation) => setBlendFactorsFFI(
+  blendFactorToShort(srcFactor),
+  blendFactorToShort(dstFactor),
+  blendFunctionToShort(equation),
+)
+
+setBlendFactorsSeparateFFI :: Short -> Short -> Short -> Short -> Short -> Short -> {}
+setBlendFactorsSeparateFFI = extern "madraylib__gl__setBlendFactorsSeparate"
+
+setBlendFactorsSeparate :: BlendFactor
+  -> BlendFactor
+  -> BlendFunction
+  -> BlendFactor
+  -> BlendFactor
+  -> BlendFunction
+  -> {}
+export setBlendFactorsSeparate = (
+  srcFactorColor,
+  dstFactorColor,
+  equationColor,
+  srcFactorAlpha,
+  dstFactorAlpha,
+  equationAlpha
+) => setBlendFactorsSeparateFFI(
+  blendFactorToShort(srcFactorColor),
+  blendFactorToShort(dstFactorColor),
+  blendFunctionToShort(equationColor),
+  blendFactorToShort(srcFactorAlpha),
+  blendFactorToShort(dstFactorAlpha),
+  blendFunctionToShort(equationAlpha),
+)

@@ -16,9 +16,9 @@ void madraylib__draw__clearBackground(madlib__record__Record_t *c) {
   ClearBackground(madraylib__color__toRaylib(c));
 }
 
-// void setDefaultShapeTexture() {
-//   SetShapesTexture(GetFontDefault().texture, (Rectangle){ 0, 0, 1, 1 });
-// }
+void madraylib__draw__beginBlendMode(int32_t mode) { BeginBlendMode(mode); }
+
+void madraylib__draw__endBlendMode(int32_t mode) { EndBlendMode(); }
 
 #ifdef __cplusplus
 }

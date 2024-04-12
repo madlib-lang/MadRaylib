@@ -1,0 +1,606 @@
+// typedef enum {
+//   KEY_NULL            = 0,        // Key: NULL, used for no key pressed
+//   // Alphanumeric keys
+//   KEY_APOSTROPHE      = 39,       // Key: '
+//   KEY_COMMA           = 44,       // Key: ,
+//   KEY_MINUS           = 45,       // Key: -
+//   KEY_PERIOD          = 46,       // Key: .
+//   KEY_SLASH           = 47,       // Key: /
+//   KEY_ZERO            = 48,       // Key: 0
+//   KEY_ONE             = 49,       // Key: 1
+//   KEY_TWO             = 50,       // Key: 2
+//   KEY_THREE           = 51,       // Key: 3
+//   KEY_FOUR            = 52,       // Key: 4
+//   KEY_FIVE            = 53,       // Key: 5
+//   KEY_SIX             = 54,       // Key: 6
+//   KEY_SEVEN           = 55,       // Key: 7
+//   KEY_EIGHT           = 56,       // Key: 8
+//   KEY_NINE            = 57,       // Key: 9
+//   KEY_SEMICOLON       = 59,       // Key: ;
+//   KEY_EQUAL           = 61,       // Key: =
+//   KEY_A               = 65,       // Key: A | a
+//   KEY_B               = 66,       // Key: B | b
+//   KEY_C               = 67,       // Key: C | c
+//   KEY_D               = 68,       // Key: D | d
+//   KEY_E               = 69,       // Key: E | e
+//   KEY_F               = 70,       // Key: F | f
+//   KEY_G               = 71,       // Key: G | g
+//   KEY_H               = 72,       // Key: H | h
+//   KEY_I               = 73,       // Key: I | i
+//   KEY_J               = 74,       // Key: J | j
+//   KEY_K               = 75,       // Key: K | k
+//   KEY_L               = 76,       // Key: L | l
+//   KEY_M               = 77,       // Key: M | m
+//   KEY_N               = 78,       // Key: N | n
+//   KEY_O               = 79,       // Key: O | o
+//   KEY_P               = 80,       // Key: P | p
+//   KEY_Q               = 81,       // Key: Q | q
+//   KEY_R               = 82,       // Key: R | r
+//   KEY_S               = 83,       // Key: S | s
+//   KEY_T               = 84,       // Key: T | t
+//   KEY_U               = 85,       // Key: U | u
+//   KEY_V               = 86,       // Key: V | v
+//   KEY_W               = 87,       // Key: W | w
+//   KEY_X               = 88,       // Key: X | x
+//   KEY_Y               = 89,       // Key: Y | y
+//   KEY_Z               = 90,       // Key: Z | z
+//   KEY_LEFT_BRACKET    = 91,       // Key: [
+//   KEY_BACKSLASH       = 92,       // Key: '\'
+//   KEY_RIGHT_BRACKET   = 93,       // Key: ]
+//   KEY_GRAVE           = 96,       // Key: `
+//   // Function keys
+//   KEY_SPACE           = 32,       // Key: Space
+//   KEY_ESCAPE          = 256,      // Key: Esc
+//   KEY_ENTER           = 257,      // Key: Enter
+//   KEY_TAB             = 258,      // Key: Tab
+//   KEY_BACKSPACE       = 259,      // Key: Backspace
+//   KEY_INSERT          = 260,      // Key: Ins
+//   KEY_DELETE          = 261,      // Key: Del
+//   KEY_RIGHT           = 262,      // Key: Cursor right
+//   KEY_LEFT            = 263,      // Key: Cursor left
+//   KEY_DOWN            = 264,      // Key: Cursor down
+//   KEY_UP              = 265,      // Key: Cursor up
+//   KEY_PAGE_UP         = 266,      // Key: Page up
+//   KEY_PAGE_DOWN       = 267,      // Key: Page down
+//   KEY_HOME            = 268,      // Key: Home
+//   KEY_END             = 269,      // Key: End
+//   KEY_CAPS_LOCK       = 280,      // Key: Caps lock
+//   KEY_SCROLL_LOCK     = 281,      // Key: Scroll down
+//   KEY_NUM_LOCK        = 282,      // Key: Num lock
+//   KEY_PRINT_SCREEN    = 283,      // Key: Print screen
+//   KEY_PAUSE           = 284,      // Key: Pause
+//   KEY_F1              = 290,      // Key: F1
+//   KEY_F2              = 291,      // Key: F2
+//   KEY_F3              = 292,      // Key: F3
+//   KEY_F4              = 293,      // Key: F4
+//   KEY_F5              = 294,      // Key: F5
+//   KEY_F6              = 295,      // Key: F6
+//   KEY_F7              = 296,      // Key: F7
+//   KEY_F8              = 297,      // Key: F8
+//   KEY_F9              = 298,      // Key: F9
+//   KEY_F10             = 299,      // Key: F10
+//   KEY_F11             = 300,      // Key: F11
+//   KEY_F12             = 301,      // Key: F12
+//   KEY_LEFT_SHIFT      = 340,      // Key: Shift left
+//   KEY_LEFT_CONTROL    = 341,      // Key: Control left
+//   KEY_LEFT_ALT        = 342,      // Key: Alt left
+//   KEY_LEFT_SUPER      = 343,      // Key: Super left
+//   KEY_RIGHT_SHIFT     = 344,      // Key: Shift right
+//   KEY_RIGHT_CONTROL   = 345,      // Key: Control right
+//   KEY_RIGHT_ALT       = 346,      // Key: Alt right
+//   KEY_RIGHT_SUPER     = 347,      // Key: Super right
+//   KEY_KB_MENU         = 348,      // Key: KB menu
+//   // Keypad keys
+//   KEY_KP_0            = 320,      // Key: Keypad 0
+//   KEY_KP_1            = 321,      // Key: Keypad 1
+//   KEY_KP_2            = 322,      // Key: Keypad 2
+//   KEY_KP_3            = 323,      // Key: Keypad 3
+//   KEY_KP_4            = 324,      // Key: Keypad 4
+//   KEY_KP_5            = 325,      // Key: Keypad 5
+//   KEY_KP_6            = 326,      // Key: Keypad 6
+//   KEY_KP_7            = 327,      // Key: Keypad 7
+//   KEY_KP_8            = 328,      // Key: Keypad 8
+//   KEY_KP_9            = 329,      // Key: Keypad 9
+//   KEY_KP_DECIMAL      = 330,      // Key: Keypad .
+//   KEY_KP_DIVIDE       = 331,      // Key: Keypad /
+//   KEY_KP_MULTIPLY     = 332,      // Key: Keypad *
+//   KEY_KP_SUBTRACT     = 333,      // Key: Keypad -
+//   KEY_KP_ADD          = 334,      // Key: Keypad +
+//   KEY_KP_ENTER        = 335,      // Key: Keypad Enter
+//   KEY_KP_EQUAL        = 336,      // Key: Keypad =
+//   // Android key buttons
+//   KEY_BACK            = 4,        // Key: Android back button
+//   KEY_MENU            = 82,       // Key: Android menu button
+//   KEY_VOLUME_UP       = 24,       // Key: Android volume up button
+//   KEY_VOLUME_DOWN     = 25        // Key: Android volume down button
+// } KeyboardKey;
+
+type Key
+  = KeyNull
+  | KeyApostrophe
+  | KeyComma
+  | KeyMinus
+  | KeyPeriod
+  | KeySlash
+  | KeyZero
+  | KeyOne
+  | KeyTwo
+  | KeyThree
+  | KeyFour
+  | KeyFive
+  | KeySix
+  | KeySeven
+  | KeyEight
+  | KeyNine
+  | KeySemicolon
+  | KeyEqual
+  | KeyA
+  | KeyB
+  | KeyC
+  | KeyD
+  | KeyE
+  | KeyF
+  | KeyG
+  | KeyH
+  | KeyI
+  | KeyJ
+  | KeyK
+  | KeyL
+  | KeyM
+  | KeyN
+  | KeyO
+  | KeyP
+  | KeyQ
+  | KeyR
+  | KeyS
+  | KeyT
+  | KeyU
+  | KeyV
+  | KeyW
+  | KeyX
+  | KeyY
+  | KeyZ
+  | KeyLeftBracket
+  | KeyBackslash
+  | KeyRightBracket
+  | KeyGrave
+  | KeySpace
+  | KeyEscape
+  | KeyEnter
+  | KeyTab
+  | KeyBackspace
+  | KeyInsert
+  | KeyDelete
+  | KeyRight
+  | KeyLeft
+  | KeyDown
+  | KeyUp
+  | KeyPageUp
+  | KeyPageDown
+  | KeyHome
+  | KeyEnd
+  | KeyCapsLock
+  | KeyScrollLock
+  | KeyNumLock
+  | KeyPrintScreen
+  | KeyPause
+  | KeyF1
+  | KeyF2
+  | KeyF3
+  | KeyF4
+  | KeyF5
+  | KeyF6
+  | KeyF7
+  | KeyF8
+  | KeyF9
+  | KeyF10
+  | KeyF11
+  | KeyF12
+  | KeyLeftShift
+  | KeyLeftControl
+  | KeyLeftAlt
+  | KeyLeftSuper
+  | KeyRightShift
+  | KeyRightControl
+  | KeyRightAlt
+  | KeyRightSuper
+  | KeyKBMenu
+  | KeyKP_0
+  | KeyKP_1
+  | KeyKP_2
+  | KeyKP_3
+  | KeyKP_4
+  | KeyKP_5
+  | KeyKP_6
+  | KeyKP_7
+  | KeyKP_8
+  | KeyKP_9
+  | KeyKPDecimal
+  | KeyKPDivide
+  | KeyKPMultiply
+  | KeyKPSubstract
+  | KeyKPAdd
+  | KeyKPEnter
+  | KeyKPEqual
+  | KeyBack
+  | KeyMenu
+  | KeyVolumeUp
+  | KeyVolumeDown
+
+keyToShort :: Key -> Short
+keyToShort = where {
+  KeyNull =>
+    0
+
+  KeyApostrophe =>
+    39
+
+  KeyComma =>
+    44
+
+  KeyMinus =>
+    45
+
+  KeyPeriod =>
+    46
+
+  KeySlash =>
+    47
+
+  KeyZero =>
+    48
+
+  KeyOne =>
+    49
+
+  KeyTwo =>
+    50
+
+  KeyThree =>
+    51
+
+  KeyFour =>
+    52
+
+  KeyFive =>
+    53
+
+  KeySix =>
+    54
+
+  KeySeven =>
+    55
+
+  KeyEight =>
+    56
+
+  KeyNine =>
+    57
+
+  KeySemicolon =>
+    59
+
+  KeyEqual =>
+    61
+
+  KeyA =>
+    65
+
+  KeyB =>
+    66
+
+  KeyC =>
+    67
+
+  KeyD =>
+    68
+
+  KeyE =>
+    69
+
+  KeyF =>
+    70
+
+  KeyG =>
+    71
+
+  KeyH =>
+    72
+
+  KeyI =>
+    73
+
+  KeyJ =>
+    74
+
+  KeyK =>
+    75
+
+  KeyL =>
+    76
+
+  KeyM =>
+    77
+
+  KeyN =>
+    78
+
+  KeyO =>
+    79
+
+  KeyP =>
+    80
+
+  KeyQ =>
+    81
+
+  KeyR =>
+    82
+
+  KeyS =>
+    83
+
+  KeyT =>
+    84
+
+  KeyU =>
+    85
+
+  KeyV =>
+    86
+
+  KeyW =>
+    87
+
+  KeyX =>
+    88
+
+  KeyY =>
+    89
+
+  KeyZ =>
+    90
+
+  KeyLeftBracket =>
+    91
+
+  KeyBackslash =>
+    92
+
+  KeyRightBracket =>
+    93
+
+  KeyGrave =>
+    96
+
+  KeySpace =>
+    32
+
+  KeyEscape =>
+    256
+
+  KeyEnter =>
+    257
+
+  KeyTab =>
+    258
+
+  KeyBackspace =>
+    259
+
+  KeyInsert =>
+    260
+
+  KeyDelete =>
+    261
+
+  KeyRight =>
+    262
+
+  KeyLeft =>
+    263
+
+  KeyDown =>
+    264
+
+  KeyUp =>
+    265
+
+  KeyPageUp =>
+    266
+
+  KeyPageDown =>
+    267
+
+  KeyHome =>
+    268
+
+  KeyEnd =>
+    269
+
+  KeyCapsLock =>
+    280
+
+  KeyScrollLock =>
+    281
+
+  KeyNumLock =>
+    282
+
+  KeyPrintScreen =>
+    283
+
+  KeyPause =>
+    284
+
+  KeyF1 =>
+    290
+
+  KeyF2 =>
+    291
+
+  KeyF3 =>
+    292
+
+  KeyF4 =>
+    293
+
+  KeyF5 =>
+    294
+
+  KeyF6 =>
+    295
+
+  KeyF7 =>
+    296
+
+  KeyF8 =>
+    297
+
+  KeyF9 =>
+    298
+
+  KeyF10 =>
+    299
+
+  KeyF11 =>
+    300
+
+  KeyF12 =>
+    301
+
+  KeyLeftShift =>
+    340
+
+  KeyLeftControl =>
+    341
+
+  KeyLeftAlt =>
+    342
+
+  KeyLeftSuper =>
+    343
+
+  KeyRightShift =>
+    344
+
+  KeyRightControl =>
+    345
+
+  KeyRightAlt =>
+    346
+
+  KeyRightSuper =>
+    347
+
+  KeyKBMenu =>
+    348
+
+  KeyKP_0 =>
+    320
+
+  KeyKP_1 =>
+    321
+
+  KeyKP_2 =>
+    322
+
+  KeyKP_3 =>
+    323
+
+  KeyKP_4 =>
+    324
+
+  KeyKP_5 =>
+    325
+
+  KeyKP_6 =>
+    326
+
+  KeyKP_7 =>
+    327
+
+  KeyKP_8 =>
+    328
+
+  KeyKP_9 =>
+    329
+
+  KeyKPDecimal =>
+    330
+
+  KeyKPDivide =>
+    331
+
+  KeyKPMultiply =>
+    332
+
+  KeyKPSubstract =>
+    333
+
+  KeyKPAdd =>
+    334
+
+  KeyKPEnter =>
+    335
+
+  KeyKPEqual =>
+    336
+
+  KeyBack =>
+    4
+
+  KeyMenu =>
+    82
+
+  KeyVolumeUp =>
+    24
+
+  KeyVolumeDown =>
+    25
+}
+
+isKeyPressedFFI :: Short -> Boolean
+isKeyPressedFFI = extern "madraylib__keyboard__isKeyPressed"
+
+isKeyPressed :: Key -> Boolean
+export isKeyPressed = pipe(
+  keyToShort,
+  isKeyPressedFFI,
+)
+
+isKeyPressedRepeatFFI :: Short -> Boolean
+isKeyPressedRepeatFFI = extern "madraylib__keyboard__isKeyPressedRepeat"
+
+isKeyPressedRepeat :: Key -> Boolean
+export isKeyPressedRepeat = pipe(
+  keyToShort,
+  isKeyPressedRepeatFFI,
+)
+
+isKeyDownFFI :: Short -> Boolean
+isKeyDownFFI = extern "madraylib__keyboard__isKeyDown"
+
+isKeyDown :: Key -> Boolean
+export isKeyDown = pipe(
+  keyToShort,
+  isKeyDownFFI,
+)
+
+isKeyReleasedFFI :: Short -> Boolean
+isKeyReleasedFFI = extern "madraylib__keyboard__isKeyReleased"
+
+isKeyReleased :: Key -> Boolean
+export isKeyReleased = pipe(
+  keyToShort,
+  isKeyReleasedFFI,
+)
+
+isKeyUpFFI :: Short -> Boolean
+isKeyUpFFI = extern "madraylib__keyboard__isKeyUp"
+
+isKeyUp :: Key -> Boolean
+export isKeyUp = pipe(
+  keyToShort,
+  isKeyUpFFI,
+)

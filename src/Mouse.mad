@@ -1,0 +1,156 @@
+import type { Vector2 } from "./Math"
+
+
+
+type Button
+  = ButtonLeft
+  | ButtonRight
+  | ButtonMiddle
+  | ButtonSide
+  | ButtonExtra
+  | ButtonForward
+  | ButtonBack
+
+buttonToShort = where {
+  ButtonLeft =>
+    0
+
+  ButtonRight =>
+    1
+
+  ButtonMiddle =>
+    2
+
+  ButtonSide =>
+    3
+
+  ButtonExtra =>
+    4
+
+  ButtonForward =>
+    5
+
+  ButtonBack =>
+    6
+}
+
+// Mouse cursor
+type Cursor
+  = CursorDefault
+  | CursorArrow
+  | CursorIbeam
+  | CursorCrosshair
+  | CursorPointingHand
+  | CursorResizeEW
+  | CursorResizeNS
+  | CursorResizeNWSE
+  | CursorResizeNESW
+  | CursorResizeALL
+  | CursorNotAllowed
+
+cursorToShort = where {
+  CursorDefault =>
+    0
+
+  CursorArrow =>
+    1
+
+  CursorIbeam =>
+    2
+
+  CursorCrosshair =>
+    3
+
+  CursorPointingHand =>
+    4
+
+  CursorResizeEW =>
+    5
+
+  CursorResizeNS =>
+    6
+
+  CursorResizeNWSE =>
+    7
+
+  CursorResizeNESW =>
+    8
+
+  CursorResizeALL =>
+    9
+
+  CursorNotAllowed =>
+    10
+}
+
+isButtonPressedFFI :: Short -> Boolean
+isButtonPressedFFI = extern "madraylib__mouse__isButtonPressed"
+
+isButtonPressed :: Button -> Boolean
+export isButtonPressed = pipe(
+  buttonToShort,
+  isButtonPressedFFI,
+)
+
+isMouseButtonDownFFI :: Short -> Boolean
+isMouseButtonDownFFI = extern "madraylib__mouse__isMouseButtonDown"
+
+isMouseButtonDown :: Button -> Boolean
+export isMouseButtonDown = pipe(
+  buttonToShort,
+  isMouseButtonDownFFI,
+)
+
+isMouseButtonReleasedFFI :: Short -> Boolean
+isMouseButtonReleasedFFI = extern "madraylib__mouse__isMouseButtonReleased"
+
+isMouseButtonReleased :: Button -> Boolean
+export isMouseButtonReleased = pipe(
+  buttonToShort,
+  isMouseButtonReleasedFFI,
+)
+
+isMouseButtonUpFFI :: Short -> Boolean
+isMouseButtonUpFFI = extern "madraylib__mouse__isMouseButtonUp"
+
+isMouseButtonUp :: Button -> Boolean
+export isMouseButtonUp = pipe(
+  buttonToShort,
+  isMouseButtonUpFFI,
+)
+
+getX :: {} -> Short
+export getX = extern "madraylib__mouse__getX"
+
+getY :: {} -> Short
+export getY = extern "madraylib__mouse__getY"
+
+getPosition :: {} -> Vector2
+export getPosition = extern "madraylib__mouse__getMousePosition"
+
+getDelta :: {} -> Vector2
+export getDelta = extern "madraylib__mouse__getMouseDelta"
+
+setPosition :: Short -> Short -> {}
+export setPosition = extern "madraylib__mouse__setMousePosition"
+
+setOffset :: Short -> Short -> {}
+export setOffset = extern "madraylib__mouse__setMouseOffset"
+
+setScale :: Float -> Float -> {}
+export setScale = extern "madraylib__mouse__setMouseScale"
+
+getWheelMove :: {} -> Float
+export getWheelMove = extern "madraylib__mouse__getMouseWheelMove"
+
+getWheelMoveV :: {} -> Vector2
+export getWheelMoveV = extern "madraylib__mouse__getMouseWheelMoveV"
+
+setMouseCursorFFI :: Short -> {}
+setMouseCursorFFI = extern "madraylib__mouse__setMouseCursor"
+
+setMouseCursor :: Cursor -> {}
+export setMouseCursor = pipe(
+  cursorToShort,
+  setMouseCursorFFI,
+)

@@ -41,7 +41,6 @@ void madraylib__shader__setShaderLocation(Shader *s, int32_t locationIndex,
     auto _value = (float *)GC_MALLOC_ATOMIC(sizeof(float));
     *_value = (float)unboxDouble((double *)value);
     transformedValue = _value;
-    // printf("FLOAT %f", *((float *)transformedValue));
   } else if (uniformType == SHADER_UNIFORM_VEC2) {
     madlib__record__Record_t *_value = (madlib__record__Record_t *)value;
     float *floats = (float *)GC_MALLOC_ATOMIC(sizeof(float) * 2);

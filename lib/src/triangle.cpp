@@ -15,7 +15,8 @@ extern "C" {
 // we call it "Points"
 
 Vector2 *madraylib__array__toPoints(madlib__array__Array_t *madlibPoints) {
-  Vector2 *points = (Vector2 *)GC_MALLOC_ATOMIC(sizeof(Vector2) * madlibPoints->length);
+  Vector2 *points =
+      (Vector2 *)GC_MALLOC_ATOMIC(sizeof(Vector2) * madlibPoints->length);
 
   for (int i = 0; i < madlibPoints->length; i++) {
     auto madlibPoint = (((madlib__record__Record_t **)madlibPoints->items)[i]);
@@ -27,7 +28,8 @@ Vector2 *madraylib__array__toPoints(madlib__array__Array_t *madlibPoints) {
 }
 
 Vector3 *madraylib__array__to3DPoints(madlib__array__Array_t *madlibPoints) {
-  Vector3 *points = (Vector3 *)GC_MALLOC_ATOMIC(sizeof(Vector3) * madlibPoints->length);
+  Vector3 *points =
+      (Vector3 *)GC_MALLOC_ATOMIC(sizeof(Vector3) * madlibPoints->length);
 
   for (int i = 0; i < madlibPoints->length; i++) {
     auto madlibPoint = (((madlib__record__Record_t **)madlibPoints->items)[i]);
@@ -40,16 +42,18 @@ Vector3 *madraylib__array__to3DPoints(madlib__array__Array_t *madlibPoints) {
 }
 
 // RLAPI void DrawTriangleStrip(Vector2 *points, int pointCount, Color color);
-void madraylib__triangle__drawTriangleStrip(madlib__array__Array_t *madlibPoints, madlib__record__Record_t *color) {
-  Color *c = madraylib__color__toRaylib(color);
+void madraylib__triangle__drawTriangleStrip(
+    madlib__array__Array_t *madlibPoints, madlib__record__Record_t *color) {
   Vector2 *points = madraylib__array__toPoints(madlibPoints);
-  DrawTriangleStrip(points, madlibPoints->length, *c);
+  DrawTriangleStrip(points, madlibPoints->length,
+                    madraylib__color__toRaylib(color));
 }
 
-void madraylib__triangle__drawTriangleStrip3D(madlib__array__Array_t *madlibPoints, madlib__record__Record_t *color) {
-  Color *c = madraylib__color__toRaylib(color);
+void madraylib__triangle__drawTriangleStrip3D(
+    madlib__array__Array_t *madlibPoints, madlib__record__Record_t *color) {
   Vector3 *points = madraylib__array__to3DPoints(madlibPoints);
-  DrawTriangleStrip3D(points, madlibPoints->length, *c);
+  DrawTriangleStrip3D(points, madlibPoints->length,
+                      madraylib__color__toRaylib(color));
 }
 
 #ifdef __cplusplus

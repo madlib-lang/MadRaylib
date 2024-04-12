@@ -1,4 +1,7 @@
 import type { Color } from "./Color"
+import type { Vector2 } from "./Math"
+
+
 
 // Rectangle, 4 components
 // typedef struct Rectangle {
@@ -7,12 +10,16 @@ import type { Color } from "./Color"
 //     float width;            // Rectangle width
 //     float height;           // Rectangle height
 // } Rectangle;
-export alias Rectangle = {
-  x :: Float,
-  y :: Float,
-  width :: Float,
-  height :: Float,
-}
+export alias Rectangle = { height :: Float, width :: Float, x :: Float, y :: Float }
 
-draw :: Rectangle -> Color -> {}
-export draw = extern "madraylib__rectangle__drawRectangleRec"
+draw :: Float -> Float -> Float -> Float -> Color -> {}
+export draw = extern "madraylib__rectangle__draw"
+
+drawV :: Vector2 -> Vector2 -> Color -> {}
+export drawV = extern "madraylib__rectangle__drawV"
+
+drawPro :: Rectangle -> Vector2 -> Float -> Color -> {}
+export drawPro = extern "madraylib__rectangle__drawPro"
+
+drawRec :: Rectangle -> Color -> {}
+export drawRec = extern "madraylib__rectangle__drawRectangleRec"

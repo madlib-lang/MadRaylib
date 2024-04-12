@@ -1,4 +1,6 @@
-import type {Color} from "./Color"
+import type { Color } from "./Color"
+
+
 
 begin :: {} -> {}
 export begin = extern "madraylib__draw__begin"
@@ -8,3 +10,51 @@ export end = extern "madraylib__draw__end"
 
 clearBackground :: Color -> {}
 export clearBackground = extern "madraylib__draw__clearBackground"
+
+type BlendMode
+  = Alpha
+  | Additive
+  | Multiplied
+  | AddColors
+  | SubstractColors
+  | AlphaPremultiply
+  | Custom
+  | CustomSeparate
+
+blendModeToShort = where {
+  Alpha =>
+    0
+
+  Additive =>
+    1
+
+  Multiplied =>
+    2
+
+  AddColors =>
+    3
+
+  SubstractColors =>
+    4
+
+  AlphaPremultiply =>
+    5
+
+  Custom =>
+    6
+
+  CustomSeparate =>
+    7
+}
+
+beginBlendModeFFI :: Short -> {}
+beginBlendModeFFI = extern "madraylib__draw__beginBlendMode"
+
+beginBlendMode :: BlendMode -> {}
+export beginBlendMode = pipe(
+  blendModeToShort,
+  beginBlendModeFFI,
+)
+
+endBlendMode :: {} -> {}
+export endBlendMode = extern "madraylib__draw__endBlendMode"

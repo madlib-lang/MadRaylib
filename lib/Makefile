@@ -7,9 +7,12 @@ INCLUDEDIR := include
 BUILDDIR := build
 SRCDIR := src
 OBJS :=\
+  $(BUILDDIR)/circle.o                  \
   $(BUILDDIR)/color.o                   \
   $(BUILDDIR)/draw.o                    \
+  $(BUILDDIR)/keyboard.o                \
   $(BUILDDIR)/math.o                    \
+  $(BUILDDIR)/mouse.o                   \
   $(BUILDDIR)/raylib.o                  \
   $(BUILDDIR)/rlgl.o                    \
   $(BUILDDIR)/rectangle.o               \
