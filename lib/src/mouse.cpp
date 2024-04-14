@@ -34,11 +34,13 @@ int32_t madraylib__mouse__getX() { return GetMouseX(); }
 int32_t madraylib__mouse__getY() { return GetMouseY(); }
 
 madlib__record__Record_t *madraylib__mouse__getMousePosition() {
-  return madraylib__math__vector2FromRaylib(&GetMousePosition());
+  auto position = GetMousePosition();
+  return madraylib__math__vector2FromRaylib(&position);
 }
 
 madlib__record__Record_t *madraylib__mouse__getMouseDelta() {
-  return madraylib__math__vector2FromRaylib(&GetMouseDelta());
+  auto delta = GetMouseDelta();
+  return madraylib__math__vector2FromRaylib(&delta);
 }
 
 void madraylib__mouse__setMousePosition(int32_t x, int32_t y) {
@@ -56,7 +58,8 @@ void madraylib__mouse__setMouseScale(double x, double y) {
 float madraylib__mouse__getMouseWheelMove() { GetMouseWheelMove(); }
 
 madlib__record__Record_t *madraylib__mouse__getMouseWheelMoveV() {
-  madraylib__math__vector2FromRaylib(&GetMouseWheelMoveV());
+  auto wheelMove = GetMouseWheelMoveV();
+  madraylib__math__vector2FromRaylib(&wheelMove);
 }
 
 void madraylib__mouse__setMouseCursor(int32_t cursor) {

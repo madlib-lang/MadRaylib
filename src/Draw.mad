@@ -11,7 +11,7 @@ export end = extern "madraylib__draw__end"
 clearBackground :: Color -> {}
 export clearBackground = extern "madraylib__draw__clearBackground"
 
-type BlendMode
+export type BlendMode
   = Alpha
   | Additive
   | Multiplied

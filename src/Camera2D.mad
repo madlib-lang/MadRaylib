@@ -1,0 +1,26 @@
+import type { Vector2 } from "./Math"
+
+// typedef struct Camera2D {
+//     Vector2 offset;         // Camera offset (displacement from target)
+//     Vector2 target;         // Camera target (rotation and zoom origin)
+//     float rotation;         // Camera rotation in degrees
+//     float zoom;             // Camera zoom (scaling), should be 1.0f by default
+// } Camera2D;
+export alias Camera2D = {
+  offset :: Vector2,
+  rotation :: Float,
+  target :: Vector2,
+  zoom :: Float,
+}
+
+begin2DMode :: Camera2D -> {}
+export begin2DMode = extern "madraylib__camera2d__begin2DMode"
+
+end2DMode :: {} -> {}
+export end2DMode = extern "madraylib__camera2d__endMode2D"
+
+getScreenToWorld2D :: Vector2 -> Camera2D -> Vector2
+export getScreenToWorld2D = extern "madraylib__camera2d__getScreenToWorld2D"
+
+getWorldToScreen2D :: Vector2 -> Camera2D -> Vector2
+export getWorldToScreen2D = extern "madraylib__camera2d__getWorldToScreen2D"

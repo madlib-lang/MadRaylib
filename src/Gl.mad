@@ -1,5 +1,3 @@
-// translatef
-
 pushMatrix :: {} -> {}
 export pushMatrix = extern "rlPushMatrix"
 
@@ -15,7 +13,7 @@ export rotatef = extern "madraylib__gl__rotatef"
 scalef :: Float -> Float -> Float -> {}
 export scalef = extern "madraylib__gl__scalef"
 
-type BlendFactor
+export type BlendFactor
   = Zero
   | One
   | SrcColor
@@ -81,7 +79,7 @@ blendFactorToShort = where {
 }
 
 
-type BlendFunction
+export type BlendFunction
   = Add
   | Min
   | Max

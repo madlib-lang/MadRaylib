@@ -50,5 +50,14 @@ export alias Texture = {
 load :: String -> Texture
 export load = extern "madraylib__texture__load"
 
+unload :: Texture -> {}
+export unload = extern "madraylib__texture__unload"
+
+draw :: Texture -> Float -> Float -> Color -> {}
+export draw = extern "madraylib__texture__draw"
+
 drawRec :: Texture -> Rectangle -> Vector2 -> Color -> {}
 export drawRec = extern "madraylib__texture__drawRec"
+
+drawPro :: Texture -> Rectangle -> Rectangle -> Vector2 -> Float -> Color -> {}
+export drawPro = extern "madraylib__texture__drawPro"

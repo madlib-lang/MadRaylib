@@ -1,0 +1,22 @@
+import type { Texture } from "./Texture"
+
+export alias RenderTexture = {
+  id :: Short,
+  texture :: Texture,
+  depth :: Texture
+}
+
+load :: Short -> Short -> RenderTexture
+export load = extern "madraylib__rendertexture__load"
+
+unload :: RenderTexture -> {}
+export unload = extern "madraylib__rendertexture__unload"
+
+isReady :: RenderTexture -> Boolean
+export isReady = extern "madraylib__rendertexture__isReady"
+
+beginTextureMode :: RenderTexture -> {}
+export beginTextureMode = extern "madraylib__rendertexture__beginTextureMode"
+
+endTextureMode :: {} -> {}
+export endTextureMode = extern "madraylib__rendertexture__endTextureMode"

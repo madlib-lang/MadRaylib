@@ -19,3 +19,4 @@ lib/src/openglexample.cpp
 shader.vert
 shader.frag
 spritesheet.png
+LightTest.mad

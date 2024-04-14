@@ -7,6 +7,7 @@ INCLUDEDIR := include
 BUILDDIR := build
 SRCDIR := src
 OBJS :=\
+  $(BUILDDIR)/camera2d.o                \
   $(BUILDDIR)/circle.o                  \
   $(BUILDDIR)/color.o                   \
   $(BUILDDIR)/draw.o                    \
@@ -16,6 +17,7 @@ OBJS :=\
   $(BUILDDIR)/raylib.o                  \
   $(BUILDDIR)/rlgl.o                    \
   $(BUILDDIR)/rectangle.o               \
+  $(BUILDDIR)/rendertexture.o           \
   $(BUILDDIR)/shader.o                  \
   $(BUILDDIR)/texture.o                 \
   $(BUILDDIR)/triangle.o                \
