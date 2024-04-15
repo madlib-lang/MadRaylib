@@ -111,6 +111,34 @@ madlib__record__Record_t *madraylib__math__vector4FromRaylib(Vector4 *vec4) {
   return result;
 }
 
+
+Vector2 *madraylib__math__toPoints(madlib__array__Array_t *madlibPoints) {
+  Vector2 *points =
+      (Vector2 *)GC_MALLOC_ATOMIC(sizeof(Vector2) * madlibPoints->length);
+
+  for (int i = 0; i < madlibPoints->length; i++) {
+    auto madlibPoint = (((madlib__record__Record_t **)madlibPoints->items)[i]);
+    points[i] = {(float)unboxDouble((double *)madlibPoint->fields[0]->value),
+                 (float)unboxDouble((double *)madlibPoint->fields[1]->value)};
+  }
+
+  return points;
+}
+
+Vector3 *madraylib__math__to3DPoints(madlib__array__Array_t *madlibPoints) {
+  Vector3 *points =
+      (Vector3 *)GC_MALLOC_ATOMIC(sizeof(Vector3) * madlibPoints->length);
+
+  for (int i = 0; i < madlibPoints->length; i++) {
+    auto madlibPoint = (((madlib__record__Record_t **)madlibPoints->items)[i]);
+    points[i] = {(float)unboxDouble((double *)madlibPoint->fields[0]->value),
+                 (float)unboxDouble((double *)madlibPoint->fields[1]->value),
+                 (float)unboxDouble((double *)madlibPoint->fields[2]->value)};
+  }
+
+  return points;
+}
+
 #ifdef __cplusplus
 }
 #endif

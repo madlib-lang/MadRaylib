@@ -1,0 +1,16 @@
+import type { Color } from "./Color"
+import type { Vector2 } from "./Math"
+
+
+draw :: Float -> Float -> Float -> Float -> Color -> {}
+export draw = extern "madraylib__line__draw"
+
+drawV :: Vector2 -> Vector2 -> Color -> {}
+export drawV = extern "madraylib__line__drawV"
+
+drawEx :: Vector2 -> Vector2 -> Float -> Color -> {}
+export drawEx = extern "madraylib__line__drawEx"
+
+drawStrip :: Array Vector2 -> Color -> {}
+export drawStrip = extern "madraylib__line__drawStrip"
+

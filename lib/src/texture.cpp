@@ -65,6 +65,14 @@ void madraylib__texture__draw(madlib__record__Record_t *texture, double x, doubl
   DrawTexture(madraylib__texture__toRaylib(texture), x, y, madraylib__color__toRaylib(color));
 }
 
+void madraylib__texture__drawV(madlib__record__Record_t *texture, madlib__record__Record_t *position, madlib__record__Record_t *color) {
+  DrawTextureV(madraylib__texture__toRaylib(texture), madraylib__math__vector2ToRaylib(position), madraylib__color__toRaylib(color));
+}
+
+void madraylib__texture__drawEx(madlib__record__Record_t *texture, madlib__record__Record_t *position, double rotation, double scale, madlib__record__Record_t *color) {
+  DrawTextureEx(madraylib__texture__toRaylib(texture), madraylib__math__vector2ToRaylib(position), rotation, scale, madraylib__color__toRaylib(color));
+}
+
 void madraylib__texture__drawRec(madlib__record__Record_t *texture, madlib__record__Record_t *rectangle,
                                  madlib__record__Record_t *position, madlib__record__Record_t *color) {
   DrawTextureRec(madraylib__texture__toRaylib(texture), madraylib__rectangle__toRaylib(rectangle),
