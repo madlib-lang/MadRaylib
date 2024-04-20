@@ -1,0 +1,32 @@
+import type { Rectangle } from "./Rectangle"
+import type { Vector2 } from "./Math"
+
+checkRecs :: Rectangle -> Rectangle -> Boolean
+export checkRecs = extern "madraylib__collision__checkRecs"
+
+getRec :: Rectangle -> Rectangle -> Rectangle
+export getRec = extern "madraylib__collision__getRec"
+
+checkCircles :: Vector2 -> Float -> Vector2 -> Float -> Boolean
+export checkCircles = extern "madraylib__collision__checkCircles"
+
+checkCircleRec :: Vector2 -> Float -> Rectangle -> Boolean
+export checkCircleRec = extern "madraylib__collision__checkCircleRec"
+
+checkPointRec :: Vector2 -> Rectangle -> Boolean
+export checkPointRec = extern "madraylib__collision__checkPointRec"
+
+checkPointCircle :: Vector2 -> Vector2 -> Float -> Boolean
+export checkPointCircle = extern "madraylib__collision__checkPointCircle"
+
+checkPointTriangle :: Vector2 -> Vector2 -> Vector2 -> Vector2 -> Boolean
+export checkPointTriangle = extern "madraylib__collision__checkPointTriangle"
+
+checkPointPoly :: Vector2 -> Array Vector2 -> Boolean
+export checkPointPoly = extern "madraylib__collision__checkPointPoly"
+
+checkLines :: Vector2 -> Vector2 -> Vector2 -> Vector2 -> Boolean
+export checkLines = extern "madraylib__collision__checkLines"
+
+checkPointLine :: Vector2 -> Vector2 -> Vector2 -> Short -> Boolean
+export checkPointLine = extern "madraylib__collision__checkPointLine"

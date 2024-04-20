@@ -9,6 +9,7 @@ SRCDIR := src
 OBJS :=\
   $(BUILDDIR)/camera2d.o                \
   $(BUILDDIR)/circle.o                  \
+  $(BUILDDIR)/collision.o               \
   $(BUILDDIR)/color.o                   \
   $(BUILDDIR)/draw.o                    \
   $(BUILDDIR)/keyboard.o                \
