@@ -35,3 +35,12 @@ export drawRounded = extern "madraylib__rectangle__drawRonded"
 
 drawRoundedLines :: Rectangle -> Float -> Short -> Float -> Color -> {}
 export drawRoundedLines = extern "madraylib__rectangle__drawRonded"
+
+drawGradientV :: Float -> Float -> Float -> Float -> Color -> Color -> {}
+export drawGradientV = extern "madraylib__rectangle__drawGradientV"
+
+drawGradientH :: Float -> Float -> Float -> Float -> Color -> Color -> {}
+export drawGradientH = extern "madraylib__rectangle__drawGradientH"
+
+drawGradientEx :: Rectangle -> Color -> Color -> Color -> Color -> {}
+export drawGradientEx = extern "madraylib__rectangle__drawGradientEx"

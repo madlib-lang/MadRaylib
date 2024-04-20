@@ -2,6 +2,14 @@ import type { Color } from "./Color"
 import type { Vector2, Vector3 } from "./Math"
 
 
+draw :: Vector2 -> Vector2 -> Vector2 -> Color -> {}
+export draw = extern "madraylib__triangle__draw"
+
+drawLines :: Vector2 -> Vector2 -> Vector2 -> Color -> {}
+export drawLines = extern "madraylib__triangle__drawLines"
+
+FanStrip :: Array Vector2 -> Color -> {}
+export drawTriangleFan = extern "madraylib__triangle__drawTriangleFan"
 
 drawTriangleStrip :: Array Vector2 -> Color -> {}
 export drawTriangleStrip = extern "madraylib__triangle__drawTriangleStrip"
