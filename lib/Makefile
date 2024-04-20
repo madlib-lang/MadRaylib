@@ -16,7 +16,6 @@ OBJS :=\
   $(BUILDDIR)/line.o                    \
   $(BUILDDIR)/math.o                    \
   $(BUILDDIR)/mouse.o                   \
-  $(BUILDDIR)/raylib.o                  \
   $(BUILDDIR)/rlgl.o                    \
   $(BUILDDIR)/rectangle.o               \
   $(BUILDDIR)/rendertexture.o           \

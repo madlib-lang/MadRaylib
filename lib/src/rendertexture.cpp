@@ -10,31 +10,32 @@ extern "C" {
 #endif
 
 madlib__record__Record_t *madraylib__rendertexture__fromRaylib(RenderTexture2D *renderTexture) {
-  madlib__record__Field_t **fields = (madlib__record__Field_t **)GC_MALLOC(sizeof(madlib__record__Field_t *) * 3);
+  madlib__record__Field_t *fields = (madlib__record__Field_t *)GC_MALLOC(sizeof(madlib__record__Field_t) * 3);
   madlib__record__Record_t *result = (madlib__record__Record_t *)GC_MALLOC(sizeof(madlib__record__Record_t));
   result->fieldCount = 3;
   result->fields = fields;
 
-  fields[0] = (madlib__record__Field_t *)GC_MALLOC(sizeof(madlib__record__Field_t));
-  fields[0]->name = "depth";
-  fields[0]->value = madraylib__texture__fromRaylib(&renderTexture->depth);
-
-  fields[1] = (madlib__record__Field_t *)GC_MALLOC_ATOMIC(sizeof(madlib__record__Field_t));
-  fields[1]->name = "id";
-  fields[1]->value = (void*) renderTexture->id;
-
-  fields[2] = (madlib__record__Field_t *)GC_MALLOC(sizeof(madlib__record__Field_t));
-  fields[2]->name = "texture";
-  fields[2]->value = madraylib__texture__fromRaylib(&renderTexture->texture);
+  fields[0] = {
+    .name = "depth",
+    .value = madraylib__texture__fromRaylib(&renderTexture->depth),
+  };
+  fields[1] = {
+    .name = "id",
+    .value = (void*)renderTexture->id,
+  };
+  fields[2] = {
+    .name = "texture",
+    .value = madraylib__texture__fromRaylib(&renderTexture->texture),
+  };
 
   return result;
 }
 
 RenderTexture2D madraylib__rendertexture__toRaylib(madlib__record__Record_t * renderTexture) {
   return {
-    .depth = madraylib__texture__toRaylib(((madlib__record__Record_t*) renderTexture->fields[0]->value)),
-    .id = (unsigned int) (int64_t) renderTexture->fields[1]->value,
-    .texture = madraylib__texture__toRaylib(((madlib__record__Record_t*) renderTexture->fields[2]->value)),
+    .depth = madraylib__texture__toRaylib(((madlib__record__Record_t*) renderTexture->fields[0].value)),
+    .id = (unsigned int) (int64_t) renderTexture->fields[1].value,
+    .texture = madraylib__texture__toRaylib(((madlib__record__Record_t*) renderTexture->fields[2].value)),
   };
 }
 

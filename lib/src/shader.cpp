@@ -44,23 +44,23 @@ void madraylib__shader__setShaderLocation(Shader *s, int32_t locationIndex,
   } else if (uniformType == SHADER_UNIFORM_VEC2) {
     madlib__record__Record_t *_value = (madlib__record__Record_t *)value;
     float *floats = (float *)GC_MALLOC_ATOMIC(sizeof(float) * 2);
-    floats[0] = (float)unboxDouble((double *)_value->fields[0]->value);
-    floats[1] = (float)unboxDouble((double *)_value->fields[1]->value);
+    floats[0] = (float)unboxDouble((double *)_value->fields[0].value);
+    floats[1] = (float)unboxDouble((double *)_value->fields[1].value);
     transformedValue = floats;
   } else if (uniformType == SHADER_UNIFORM_VEC3) {
     madlib__record__Record_t *_value = (madlib__record__Record_t *)value;
     float *floats = (float *)GC_MALLOC_ATOMIC(sizeof(float) * 3);
-    floats[0] = (float)unboxDouble((double *)_value->fields[0]->value);
-    floats[1] = (float)unboxDouble((double *)_value->fields[1]->value);
-    floats[2] = (float)unboxDouble((double *)_value->fields[2]->value);
+    floats[0] = (float)unboxDouble((double *)_value->fields[0].value);
+    floats[1] = (float)unboxDouble((double *)_value->fields[1].value);
+    floats[2] = (float)unboxDouble((double *)_value->fields[2].value);
     transformedValue = floats;
   } else if (uniformType == SHADER_UNIFORM_VEC4) {
     madlib__record__Record_t *_value = (madlib__record__Record_t *)value;
     float *floats = (float *)GC_MALLOC_ATOMIC(sizeof(float) * 4);
-    floats[0] = (float)unboxDouble((double *)_value->fields[1]->value);
-    floats[1] = (float)unboxDouble((double *)_value->fields[2]->value);
-    floats[2] = (float)unboxDouble((double *)_value->fields[3]->value);
-    floats[3] = (float)unboxDouble((double *)_value->fields[0]->value);
+    floats[0] = (float)unboxDouble((double *)_value->fields[1].value);
+    floats[1] = (float)unboxDouble((double *)_value->fields[2].value);
+    floats[2] = (float)unboxDouble((double *)_value->fields[3].value);
+    floats[3] = (float)unboxDouble((double *)_value->fields[0].value);
     transformedValue = floats;
   }
 
