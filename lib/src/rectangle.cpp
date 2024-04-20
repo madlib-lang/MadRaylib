@@ -64,6 +64,12 @@ void madraylib__rectangle__drawV(madlib__record__Record_t *position,
                  madraylib__color__toRaylib(color));
 }
 
+void madraylib__rectangle__drawRec(madlib__record__Record_t *rectangle,
+                                            madlib__record__Record_t *color) {
+  DrawRectangleRec(madraylib__rectangle__toRaylib(rectangle),
+                   madraylib__color__toRaylib(color));
+}
+
 void madraylib__rectangle__drawPro(madlib__record__Record_t *rec,
                                    madlib__record__Record_t *origin,
                                    double rotation,
@@ -73,10 +79,20 @@ void madraylib__rectangle__drawPro(madlib__record__Record_t *rec,
                    madraylib__color__toRaylib(color));
 }
 
-void madraylib__rectangle__drawRectangleRec(madlib__record__Record_t *rectangle,
-                                            madlib__record__Record_t *color) {
-  DrawRectangleRec(madraylib__rectangle__toRaylib(rectangle),
-                   madraylib__color__toRaylib(color));
+void madraylib__rectangle__drawLines(double x, double y, double width, double height, madlib__record__Record_t *color) {
+    DrawRectangleLines(x, y, width, height, madraylib__color__toRaylib(color));
+}
+
+void madraylib__rectangle__drawLinesEx(madlib__record__Record_t *rectangle, double thickness, madlib__record__Record_t *color) {
+    DrawRectangleLinesEx(madraylib__rectangle__toRaylib(rectangle), thickness, madraylib__color__toRaylib(color));
+}
+
+void madraylib__rectangle__drawRounded(madlib__record__Record_t *rectangle, double roundness, int32_t segments, madlib__record__Record_t *color) {
+    DrawRectangleRounded(madraylib__rectangle__toRaylib(rectangle), roundness, segments, madraylib__color__toRaylib(color));
+}
+
+void madraylib__rectangle__drawRoundedLines(madlib__record__Record_t *rectangle, double roundness, int32_t segments, double thickness, madlib__record__Record_t *color) {
+    DrawRectangleRoundedLines(madraylib__rectangle__toRaylib(rectangle), roundness, segments, thickness, madraylib__color__toRaylib(color));
 }
 
 #ifdef __cplusplus

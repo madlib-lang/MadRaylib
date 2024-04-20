@@ -22,4 +22,16 @@ drawPro :: Rectangle -> Vector2 -> Float -> Color -> {}
 export drawPro = extern "madraylib__rectangle__drawPro"
 
 drawRec :: Rectangle -> Color -> {}
-export drawRec = extern "madraylib__rectangle__drawRectangleRec"
+export drawRec = extern "madraylib__rectangle__drawRec"
+
+drawLines :: Float -> Float -> Float -> Float -> Color -> {}
+export drawLines = extern "madraylib__rectangle__drawLines"
+
+drawLinesEx :: Rectangle -> Float -> Color -> {}
+export drawLinesEx = extern "madraylib__rectangle__drawLinesEx"
+
+drawRounded :: Rectangle -> Float -> Short -> Color -> {}
+export drawRounded = extern "madraylib__rectangle__drawRonded"
+
+drawRoundedLines :: Rectangle -> Float -> Short -> Float -> Color -> {}
+export drawRoundedLines = extern "madraylib__rectangle__drawRonded"
