@@ -4,6 +4,7 @@
 #include "gc.h"
 #include "number.hpp"
 #include "record.hpp"
+#include "./texture.hpp"
 
 #ifdef __cplusplus
 extern "C" {
@@ -65,6 +66,10 @@ void madraylib__shader__setShaderLocation(Shader *s, int32_t locationIndex,
   }
 
   SetShaderValue(*s, locationIndex, transformedValue, uniformType);
+}
+
+void madraylib__shader__setShaderValueTexture(Shader *s, int32_t locationIndex, madlib__record__Record_t *texture) {
+  SetShaderValueTexture(*s, locationIndex, madraylib__texture__toRaylib(texture));
 }
 
 #ifdef __cplusplus

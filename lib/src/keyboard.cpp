@@ -13,7 +13,7 @@ bool madraylib__keyBoard__isKeyPressedRepeat(int32_t key) {
   return IsKeyPressedRepeat(key);
 }
 
-bool madraylib__keyBoard__isKeyDown(int32_t key) { return IsKeyDown(key); }
+bool madraylib__keyboard__isKeyDown(int32_t key) { return IsKeyDown(key); }
 
 bool madraylib__keyBoard__isKeyReleased(int32_t key) {
   return IsKeyReleased(key);

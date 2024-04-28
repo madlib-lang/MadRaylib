@@ -8,6 +8,7 @@ BUILDDIR := build
 SRCDIR := src
 OBJS :=\
   $(BUILDDIR)/camera2d.o                \
+  $(BUILDDIR)/camera3d.o                \
   $(BUILDDIR)/circle.o                  \
   $(BUILDDIR)/collision.o               \
   $(BUILDDIR)/color.o                   \
