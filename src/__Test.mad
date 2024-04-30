@@ -1,0 +1,109 @@
+import IO from "IO"
+
+import Circle from "./Circle"
+import Draw from "./Draw"
+import Gl from "./Gl"
+import Rectangle from "./Rectangle"
+import Shader from "./Shader"
+import Texture from "./Texture"
+import Window from "./Window"
+
+
+
+// (value - from1) / (to1 - from1) * (to2 - from2) + from2;
+
+
+VS_SHADER = `
+#version 330
+in vec4 vertexPosition;
+
+uniform vec2 uLightPosition;
+uniform float uElevation;
+uniform mat4 mvp;
+
+out vec2 vPosition;
+out vec3 vLightPosition;
+
+void main () {
+  vLightPosition = (mvp * vec4(uLightPosition.xy, min(1, max(0, uElevation)), 1.0)).xyz;
+  gl_Position = mvp * vec4(vertexPosition.xyz, 1.0);
+  vPosition = gl_Position.xy;
+}
+`
+
+FS_SHADER = `
+#version 330
+in vec3 vLightPosition;
+in vec2 vPosition;
+
+uniform vec4 uLightColor;
+uniform float uElevation;
+uniform float uFalloff;
+uniform float uIntensity;
+
+out vec4 finalColor;
+
+void main() {
+  vec2 lp = vec2(0.0, 0.0);
+  float distance = length(vLightPosition - vec3(vPosition, 0.0));
+  float constant = 1;
+  float linear = 100.0 * uFalloff;
+  float quadratic = 450 * uFalloff;
+  float attenuation = 1.0 / (constant + linear * distance + quadratic * (distance * distance));
+
+  vec4 color = vec4(attenuation * uLightColor.xyz * uIntensity, 1.0);
+
+  finalColor = color;
+}
+`
+
+
+main = () => {
+  Window.setConfigFlags([Window.Resizable])
+
+  Window.init(640, 480, "MadRaylib")
+  Window.setTargetFps(150)
+  tex = Texture.load("./spritesheet.png")
+  IO.cTrace("tex", tex)
+  angle = 0
+
+  shader = Shader.loadFromMemory(VS_SHADER, FS_SHADER)
+
+  while(!Window.shouldClose()) do {
+    // angle := angle + 5
+    Draw.begin()
+    Draw.clearBackground({ r: 0, g: 0, b: 0, a: 255 })
+
+    // Gl.pushMatrix()
+    // Gl.translatef(200, 200, 0)
+    // Gl.translatef(2.5, 150, 0)
+    // Gl.rotatef(angle, 0, 0, 1.0)
+    // Gl.scalef(25, 1.0, 0.0)
+    // Gl.translatef(-2.5, -150, 0)
+    // Shader.beginShaderMode(shader)
+    // Rectangle.draw({ x: 0, y: 0, width: 5, height: 300 }, { r: 255, g: 255, b: 60, a: 255 })
+    // Shader.endShaderMode()
+    // Gl.popMatrix()
+
+    Shader.beginShaderMode(shader)
+    Shader.setUniformFloat("uElevation", 0.1, shader)
+    Shader.setUniformVec2("uLightPosition", { x: 100, y: 100 }, shader)
+    Shader.setUniformVec4("uLightColor", { x: 6.0, y: 4.0, z: 0.2, w: 1.0 }, shader)
+    Shader.setUniformFloat("uIntensity", 10.0, shader)
+    Shader.setUniformFloat("uFalloff", 0.2, shader)
+    Rectangle.drawRec({ x: 0, y: 0, width: 640, height: 480 }, { r: 255, g: 255, b: 60, a: 255 })
+    Shader.endShaderMode()
+
+    Circle.drawSector({ x: 50, y: 50 }, 90, 90, 180, 2, { r: 255, g: 255, b: 60, a: 255 })
+
+    Texture.drawRec(
+      tex,
+      { x: 0, y: 0, width: 120, height: 120 },
+      { x: 300, y: 300 },
+      { r: 255, g: 255, b: 255, a: 255 },
+    )
+    Draw.end()
+  }
+
+  Window.close()
+}

@@ -1,0 +1,219 @@
+import Array from "Array"
+import Float from "Float"
+
+import Camera from "./Camera2D"
+import Draw from "./Draw"
+import Gl from "./Gl"
+import Keyboard from "./Keyboard"
+import Math from "./Math"
+import Mouse from "./Mouse"
+import Rectangle from "./Rectangle"
+import RenderTexture from "./RenderTexture"
+import Shader from "./Shader"
+import Texture from "./Texture"
+import Triangle from "./Triangle"
+import Window from "./Window"
+
+
+
+VS_SHADER = `
+#version 330
+in vec4 vertexPosition;
+in vec2 vertexTexCoord;
+
+uniform vec2 uLightPosition;
+uniform float uElevation;
+uniform mat4 mvp;
+
+out vec2 vPosition;
+out vec3 vLightPosition;
+out vec2 fragTexCoord;
+
+
+void main () {
+  vLightPosition = (mvp * vec4(uLightPosition.xy, 0.0, 1.0)).xyz;
+  vLightPosition.z = min(1, max(0, uElevation));
+  // vLightPosition.y = vLightPosition.y + vLightPosition.z;
+  gl_Position = mvp * vec4(vertexPosition.xyz, 1.0);
+  vPosition = gl_Position.xy;
+  fragTexCoord = vertexTexCoord;
+}`
+
+FS_SHADER = `
+#version 330
+in vec3 vLightPosition;
+in vec2 vPosition;
+in vec2 fragTexCoord;
+
+uniform mat4 matView;
+uniform mat4 matModel;
+uniform mat3 matNormal;
+uniform sampler2D texture0;
+uniform sampler2D uNormalMap;
+uniform sampler2D uHeightMap;
+uniform vec4 uLightColor;
+uniform float uFalloff;
+uniform float uIntensity;
+
+out vec4 finalColor;
+
+void main() {
+  vec4 diffuse = texture(texture0, fragTexCoord);
+
+  float z = texture(uHeightMap, fragTexCoord).x;
+  // float z = 0;
+  vec3 normal = 2 * vec3(texture(uNormalMap, fragTexCoord)) - 1;
+  // normal = matNormal * normal;
+  vec3 norm = normalize(normal);
+  vec3 lightDir = normalize(vLightPosition - vec3(vPosition, z));  
+
+  float distance = length(vLightPosition - vec3(vPosition, z));
+  float constant = 1;
+  float linear = 10.0 * uFalloff;
+  float quadratic = 50 * uFalloff;
+  float attenuation = 1.0 / (constant + linear * distance + quadratic * (distance * distance));
+
+  float diff = max(dot(norm, lightDir), 0.0);
+  vec4 color = diff * vec4(attenuation * uLightColor.xyz * uIntensity, 1.0);
+  finalColor = (diffuse * vec4(0.4, 0.4, 0.7, 1.0)) + color;
+
+  float lightDiffX = vPosition.x - vLightPosition.x;
+  float lightDiffY = vPosition.y - vLightPosition.y;
+  if (lightDiffX < 0.01 && lightDiffX > 0.0 && lightDiffY < 0.01 && lightDiffY > 0.0) {
+    finalColor = vec4(1.0);
+  }
+}`
+
+
+main = () => {
+  camera = { offset: { x: 0, y: 0 }, rotation: 0, target: { x: 0, y: 0 }, zoom: 1 }
+  Window.init(800, 600, "MadRaylib")
+  Window.setTargetFps(50)
+  tex = Texture.load("./beauty.png")
+  tex2 = Texture.load("./normal.png")
+  tex3 = Texture.load("./heightmap.png")
+  angle = 0
+
+  rt = RenderTexture.load(200, 200)
+
+  lightShader = Shader.loadFromMemory(VS_SHADER, FS_SHADER)
+
+  light1Position = { x: 200, y: 200 }
+  lightElevation = 0.3
+
+  while(!Window.shouldClose()) do {
+    angle := angle + 5
+    Draw.begin()
+    Draw.clearBackground({ r: 0, g: 0, b: 0, a: 255 })
+    light1Position := Camera.getScreenToWorld2D(Mouse.getPosition(), camera)
+
+    if (Keyboard.isKeyDown(Keyboard.KeyA)) do {
+      camera.target.x := camera.target.x - 2
+    }
+    if (Keyboard.isKeyDown(Keyboard.KeyD)) do {
+      camera.target.x := camera.target.x + 2
+    }
+    if (Keyboard.isKeyDown(Keyboard.KeyW)) do {
+      camera.target.y := camera.target.y - 2
+    }
+    if (Keyboard.isKeyDown(Keyboard.KeyS)) do {
+      camera.target.y := camera.target.y + 2
+    }
+    if (Keyboard.isKeyDown(Keyboard.KeyLeft)) do {
+      camera.zoom := camera.zoom - 0.01
+    }
+    if (Keyboard.isKeyDown(Keyboard.KeyRight)) do {
+      camera.zoom := camera.zoom + 0.01
+    }
+    if (Keyboard.isKeyDown(Keyboard.KeyUp)) do {
+      lightElevation := lightElevation + 0.03
+    }
+    if (Keyboard.isKeyDown(Keyboard.KeyDown)) do {
+      lightElevation := lightElevation - 0.03
+    }
+
+    // RenderTexture.beginTextureMode(light1Texture)
+    // Draw.clearBackground({ r: 0, g: 0, b: 0, a: 255 })
+    // drawShadows(shadowShader, light1Position)
+    // drawLight(lightShader, light1Position, { x: 1.0, y: 0.8, z: 0.6, w: 1.0 })
+
+    // drawShadows(shadowShader, light2Position)
+    // drawLight(lightShader, light2Position, { x: 0.6, y: 0.8, z: 1.0, w: 1.0 })
+    // RenderTexture.endTextureMode()
+
+    // RenderTexture.beginTextureMode(rt)
+    // Draw.clearBackground({ r: 255, g: 0, b: 0, a: 255 })
+    // Texture.draw(tex, 0, 0, { r: 255, g: 255, b: 255, a: 255 })
+    // Rectangle.drawRec({ x: 100, y: 100, width: 40, height: 40 }, { r: 0, g: 255, b: 0, a: 255 })
+    // Rectangle.draw(20, 20, 50, 50, { r: 255, g: 255, b: 255, a: 255 })
+    // RenderTexture.endTextureMode()
+
+    Camera.begin2DMode(camera)
+    Shader.beginShaderMode(lightShader)
+    Shader.setUniformFloat("uElevation", lightElevation, lightShader)
+    Shader.setUniformVec2("uLightPosition", light1Position, lightShader)
+    Shader.setUniformVec4("uLightColor", { x: 240, y: 160, z: 100, w: 255 }, lightShader)
+    Shader.setUniformFloat("uIntensity", 2, lightShader)
+    Shader.setUniformFloat("uFalloff", 300, lightShader)
+    Shader.setUniformTexture("uNormalMap", tex2, lightShader)
+    Shader.setUniformTexture("uHeightMap", tex3, lightShader)
+    Texture.draw(tex, 0, 0, { r: 255, g: 255, b: 255, a: 255 })
+    Shader.endShaderMode()
+    // Texture.drawPro(
+    //   rt.texture,
+    //   { x: 0, y: 0, width: 200, height: -200 },
+    //   { x: 0, y: 0, width: 800, height: 600 },
+    //   { x: 0, y: 0 },
+    //   0,
+    //   { r: 255, g: 255, b: 255, a: 255 },
+    // )
+    // Gl.setBlendFactors(
+    //   Gl.One,
+    //   Gl.One,
+    //   Gl.Min,
+    // )
+    // Draw.beginBlendMode(Draw.Custom)
+    // Rectangle.draw(0, 0, 800, 800, { r: 5, g: 5, b: 5, a: 255 })
+    // Draw.endBlendMode()
+
+
+    // Draw.beginBlendMode(Draw.Additive)
+    // Texture.drawRec(
+    //   light1Texture.texture,
+    //   {
+    //     x: 0,
+    //     y: 0,
+    //     width: Float.fromShort(light1Texture.texture.width),
+    //     height: -Float.fromShort(light1Texture.texture.height),
+    //   },
+    //   { x: 0, y: 0 },
+    //   { r: 255, g: 255, b: 255, a: 255 },
+    // )
+    // Draw.endBlendMode()
+    // drawShadows(shadowShader, light2Position)
+    // drawLight(lightShader, light2Position, { x: 0.6, y: 0.8, z: 1.0, w: 1.0 })
+    Camera.end2DMode()
+
+
+    // Gl.pushMatrix()
+    // Gl.translatef(200, 200, 0)
+    // Gl.translatef(2.5, 150, 0)
+    // Gl.rotatef(angle, 0, 0, 1.0)
+    // Gl.scalef(25, 1.0, 0.0)
+    // Gl.translatef(-2.5, -150, 0)
+    // Rectangle.drawRec({ x: 0, y: 0, width: 5, height: 300 }, { r: 255, g: 255, b: 60, a: 255 })
+    // Gl.popMatrix()
+
+    // Texture.drawRec(
+    //   tex,
+    //   { x: 0, y: 0, width: 120, height: 120 },
+    //   { x: 300, y: 300 },
+    //   { r: 255, g: 255, b: 255, a: 255 },
+    // )
+    Draw.end()
+  }
+
+  RenderTexture.unload(rt)
+  Texture.unload(tex)
+  Window.close()
+}

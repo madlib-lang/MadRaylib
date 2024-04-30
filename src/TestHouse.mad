@@ -5,6 +5,7 @@ import Camera from "./Camera2D"
 import Camera3D from "./Camera3D"
 import Draw from "./Draw"
 import Gl from "./Gl"
+import Keyboard from "./Keyboard"
 import Math from "./Math"
 import Mouse from "./Mouse"
 import Rectangle from "./Rectangle"
@@ -13,7 +14,6 @@ import Shader from "./Shader"
 import Texture from "./Texture"
 import Triangle from "./Triangle"
 import Window from "./Window"
-import Keyboard from "./Keyboard"
 
 
 
@@ -39,8 +39,7 @@ void main () {
   gl_Position = mvp * vec4(vertexPosition.xyz, 1.0);
   vPosition = gl_Position.xy;
   fragTexCoord = vertexTexCoord;
-}
-`
+}`
 
 FS_SHADER = `
 #version 330
@@ -104,8 +103,7 @@ void main() {
 
   finalColor.xyz = pow(finalColor.xyz, vec3(1.0 / 2.2));
   // finalColor = ((attenuation * diff) + (spec * specularStrength) + ambiant) * vec4(uLightColor.xyz * uIntensity, 1.0);
-}
-`
+}`
 
 
 V_SHADER_SHADOW = `
@@ -118,15 +116,21 @@ uniform mat4 mvp;
 out vec2 fragTexCoord;
 out vec2 vPosition;
 
-void main() {
-  // vec2 vLightPosition = (mvp * vec4(uLightPosition.x, uLightPosition.y, 1.0, 1.0)).xy;
-  vec4 position = mvp * vec4(vertexPosition.xy, 0.0, 1.0);
 
-  fragTexCoord = vertexTexCoord;
-  vPosition = position.xy;
-  gl_Position = position;
-}
-`
+attribute vec3 a_vertex;
+  
+uniform mat4 u_matrix;
+uniform vec2 u_light_position;
+
+void main(){
+  // Transform the position.
+  // If you are batching the shadow data, you can pre-apply the transform instead.
+  vec2 position = (mvp*vec4(vertexPosition.xy, 0.0, 1.0)).xy;
+  
+  // When a_vertex.z is 0, the vertex is on the near side of the shadow and is output as is.
+  // When a_vertex.z is 1, the vertex is on the far side of the shadow as is projected to inifity.
+  gl_Position = vec4(position - vertexPosition.z*u_light_position, 0, 1.0 - vertexPosition.z);
+}`
 
 F_SHADER_SHADOW = `
 #version 330
@@ -138,15 +142,8 @@ uniform sampler2D uHeightMap;
 out vec4 finalColor;
 
 void main() {
-  float z = texture(uHeightMap, fragTexCoord).y * 3;
-  vec3 pixelPosition = vec3(vPosition.x, vPosition.y - z * 0.7547, z);
-  float distance = length(pixelPosition - vec3(-0.3, 0.0, 0.2));
-  finalColor = vec4(distance, distance, distance, 1.0);
-  // finalColor = vec4(normalize(pixelPosition), 1.0);
-
-  // finalColor = vec4(z, z, z, 1.0);
-}
-`
+  finalColor = vec4(0.0);
+}`
 
 
 main = () => {
