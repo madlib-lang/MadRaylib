@@ -115,7 +115,7 @@
 //   KEY_VOLUME_DOWN     = 25        // Key: Android volume down button
 // } KeyboardKey;
 
-type Key
+export type Key
   = KeyNull
   | KeyApostrophe
   | KeyComma
