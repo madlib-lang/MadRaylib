@@ -14,6 +14,7 @@ OBJS :=\
   $(BUILDDIR)/color.o                   \
   $(BUILDDIR)/draw.o                    \
   $(BUILDDIR)/keyboard.o                \
+  $(BUILDDIR)/image.o                   \
   $(BUILDDIR)/line.o                    \
   $(BUILDDIR)/math.o                    \
   $(BUILDDIR)/mouse.o                   \

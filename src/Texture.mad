@@ -1,6 +1,7 @@
 import type { Color } from "./Color"
 import type { Vector2 } from "./Math"
 import type { Rectangle } from "./Rectangle"
+import type { Image } from "./Image"
 
 
 
@@ -49,6 +50,9 @@ export alias Texture = {
 
 load :: String -> Texture
 export load = extern "madraylib__texture__load"
+
+loadFromImage :: Image -> Texture
+export loadFromImage = extern "madraylib__texture__loadFromImage"
 
 unload :: Texture -> {}
 export unload = extern "madraylib__texture__unload"

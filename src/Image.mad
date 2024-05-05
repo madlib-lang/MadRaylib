@@ -1,0 +1,22 @@
+// typedef struct Image {
+//   void *data;             // Image raw data
+//   int width;              // Image base width
+//   int height;             // Image base height
+//   int mipmaps;            // Mipmap levels, 1 by default
+//   int format;             // Data format (PixelFormat type)
+// } Image;
+export alias Image = {
+  data :: ByteArray,
+  format :: Short,
+  height :: Short,
+  mipmaps :: Short,
+  width :: Short,
+}
+
+load :: String -> Image
+export load = extern "madraylib__image__load"
+
+// TODO: add unload
+
+format :: Short -> Image -> Image
+export format = extern "madraylib__image__format"
