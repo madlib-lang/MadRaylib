@@ -1,0 +1,2 @@
+loadText :: String -> String
+export loadText = extern "madraylib__file__loadText"

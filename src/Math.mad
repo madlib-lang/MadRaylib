@@ -27,10 +27,7 @@ export alias Vector4 = { w :: Float, x :: Float, y :: Float, z :: Float }
 
 
 getAngle = (a, b) => Math.atan2(a.y - b.y, a.x - b.x)
-
 getDistance = (a, b) => Math.sqrt(Math.square(a.x - b.x) + Math.square(a.y - b.y))
-import IO from "IO"
-
 
 
 getBackpointsFrom :: Vector2 -> Array Vector2 -> Array Vector2

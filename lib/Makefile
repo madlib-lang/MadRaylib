@@ -13,6 +13,7 @@ OBJS :=\
   $(BUILDDIR)/collision.o               \
   $(BUILDDIR)/color.o                   \
   $(BUILDDIR)/draw.o                    \
+  $(BUILDDIR)/file.o                    \
   $(BUILDDIR)/keyboard.o                \
   $(BUILDDIR)/image.o                   \
   $(BUILDDIR)/line.o                    \

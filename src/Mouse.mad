@@ -2,7 +2,7 @@ import type { Vector2 } from "./Math"
 
 
 
-type Button
+export type Button
   = ButtonLeft
   | ButtonRight
   | ButtonMiddle
@@ -95,8 +95,8 @@ export isButtonPressed = pipe(
 isMouseButtonDownFFI :: Short -> Boolean
 isMouseButtonDownFFI = extern "madraylib__mouse__isMouseButtonDown"
 
-isMouseButtonDown :: Button -> Boolean
-export isMouseButtonDown = pipe(
+isButtonDown :: Button -> Boolean
+export isButtonDown = pipe(
   buttonToShort,
   isMouseButtonDownFFI,
 )
@@ -104,8 +104,8 @@ export isMouseButtonDown = pipe(
 isMouseButtonReleasedFFI :: Short -> Boolean
 isMouseButtonReleasedFFI = extern "madraylib__mouse__isMouseButtonReleased"
 
-isMouseButtonReleased :: Button -> Boolean
-export isMouseButtonReleased = pipe(
+isButtonReleased :: Button -> Boolean
+export isButtonReleased = pipe(
   buttonToShort,
   isMouseButtonReleasedFFI,
 )
@@ -113,8 +113,8 @@ export isMouseButtonReleased = pipe(
 isMouseButtonUpFFI :: Short -> Boolean
 isMouseButtonUpFFI = extern "madraylib__mouse__isMouseButtonUp"
 
-isMouseButtonUp :: Button -> Boolean
-export isMouseButtonUp = pipe(
+isButtonUp :: Button -> Boolean
+export isButtonUp = pipe(
   buttonToShort,
   isMouseButtonUpFFI,
 )
