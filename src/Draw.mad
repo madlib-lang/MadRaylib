@@ -8,6 +8,9 @@ export begin = extern "madraylib__draw__begin"
 end :: {} -> {}
 export end = extern "madraylib__draw__end"
 
+endCustom :: {} -> {}
+export endCustom = extern "madraylib__draw__endCustom"
+
 clearBackground :: Color -> {}
 export clearBackground = extern "madraylib__draw__clearBackground"
 

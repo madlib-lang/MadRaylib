@@ -1,3 +1,7 @@
+#ifndef GC_THREADS
+  #define GC_THREADS
+#endif
+
 #include <raylib.h>
 #include <rlgl.h>
 
@@ -11,7 +15,11 @@ extern "C" {
 void madraylib__draw__begin() { BeginDrawing(); }
 
 void madraylib__draw__end() {
-  EndDrawing();
+  EndDrawing(false);
+}
+
+void madraylib__draw__endCustom() {
+  EndDrawing(true);
 }
 
 void madraylib__draw__clearBackground(madlib__record__Record_t *c) {

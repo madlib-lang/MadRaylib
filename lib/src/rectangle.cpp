@@ -99,10 +99,8 @@ void madraylib__rectangle__drawRounded(madlib__record__Record_t *rectangle, doub
                        madraylib__color__toRaylib(color));
 }
 
-void madraylib__rectangle__drawRoundedLines(madlib__record__Record_t *rectangle, double roundness, int32_t segments,
-                                            double thickness, madlib__record__Record_t *color) {
-  DrawRectangleRoundedLines(madraylib__rectangle__toRaylib(rectangle), roundness, segments, thickness,
-                            madraylib__color__toRaylib(color));
+void madraylib__rectangle__drawRoundedLines(madlib__record__Record_t *rectangle, double roundness, int32_t segments, madlib__record__Record_t *color) {
+  DrawRectangleRoundedLines(madraylib__rectangle__toRaylib(rectangle), roundness, segments, madraylib__color__toRaylib(color));
 }
 
 #ifdef __cplusplus

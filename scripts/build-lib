@@ -5,9 +5,9 @@ mkdir -p lib/include
 
 cd .buildlibs
 
-wget https://github.com/raysan5/raylib/archive/refs/tags/5.0.zip
-unzip 5.0.zip
-cd raylib-5.0
+wget https://github.com/madlib-lang/raylib/archive/refs/heads/patch.zip
+unzip patch.zip
+cd raylib-patch
 cd src
 
 
