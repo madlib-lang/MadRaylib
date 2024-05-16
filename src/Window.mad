@@ -156,3 +156,18 @@ export shouldClose = extern "madraylib__window__shouldClose"
 
 close :: {} -> {}
 export close = extern "madraylib__window__close"
+
+pollInputEvents :: {} -> {}
+export pollInputEvents = extern "madraylib__window__pollInputEvents"
+
+waitTime :: {} -> {}
+export waitTime = extern "madraylib__window__waitTime"
+
+swapScreenBuffer :: {} -> {}
+export swapScreenBuffer = extern "madraylib__window__swapScreenBuffer"
+
+enableEventWaiting :: {} -> {}
+export enableEventWaiting = extern "madraylib__window__enableEventWaiting"
+
+disableEventWaiting :: {} -> {}
+export disableEventWaiting = extern "madraylib__window__disableEventWaiting"

@@ -1,3 +1,7 @@
+#ifndef GC_THREADS
+  #define GC_THREADS
+#endif
+
 #include <stdint.h>
 
 #include "./color.hpp"

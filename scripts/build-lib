@@ -11,7 +11,7 @@ cd raylib-5.0
 cd src
 
 
-
+# CUSTOM_CFLAGS
 make PLATFORM=PLATFORM_DESKTOP
 cp libraylib.a ../../../lib/lib/
 cp *.h ../../../lib/include/

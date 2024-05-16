@@ -1,3 +1,7 @@
+#ifndef GC_THREADS
+  #define GC_THREADS
+#endif
+
 #include <raylib.h>
 #include <stdint.h>
 
@@ -36,6 +40,27 @@ void madraylib__window__clearWindowState(int32_t flags) {
 bool madraylib__window__isWindowStateEnabled(int32_t flag) {
   IsWindowState(flag);
 }
+
+void madraylib__window__pollInputEvents() {
+  PollInputEvents();
+}
+
+void madraylib__window__waitTime(double seconds) {
+  WaitTime(seconds);
+}
+
+void madraylib__window__swapScreenBuffer() {
+  SwapScreenBuffer();
+}
+
+void madraylib__window__enableEventWaiting() {
+  EnableEventWaiting();
+}
+
+void madraylib__window__disableEventWaiting() {
+  DisableEventWaiting();
+}
+
 
 #ifdef __cplusplus
 }

@@ -1,3 +1,7 @@
+#ifndef GC_THREADS
+  #define GC_THREADS
+#endif
+
 #include <raylib.h>
 
 #include "record.hpp"
