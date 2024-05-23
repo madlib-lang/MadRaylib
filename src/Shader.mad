@@ -7,12 +7,21 @@ export type Shader
 getShaderLocation :: Shader -> String -> Short
 getShaderLocation = extern "madraylib__shader__getShaderLocation"
 
-setShaderLocationFFI :: Shader -> Short -> a -> Short -> {}
-setShaderLocationFFI = extern "madraylib__shader__setShaderLocation"
+setShaderValueFFI :: Shader -> Short -> a -> Short -> {}
+setShaderValueFFI = extern "madraylib__shader__setShaderValue"
 
-setShaderLocation :: Short -> String -> a -> Shader -> Shader
-setShaderLocation = (t, name, value, shader) => {
-  setShaderLocationFFI(shader, getShaderLocation(shader, name), value, t)
+setShaderValuesFFI :: Shader -> Short -> Array a -> Short -> {}
+setShaderValuesFFI = extern "madraylib__shader__setShaderValues"
+
+setShaderValues :: Short -> String -> Array a -> Shader -> Shader
+setShaderValues = (t, name, value, shader) => {
+  setShaderValuesFFI(shader, getShaderLocation(shader, name), value, t)
+  return shader
+}
+
+setShaderValue :: Short -> String -> a -> Shader -> Shader
+setShaderValue = (t, name, value, shader) => {
+  setShaderValueFFI(shader, getShaderLocation(shader, name), value, t)
   return shader
 }
 
@@ -28,17 +37,32 @@ setShaderLocation = (t, name, value, shader) => {
 //     SHADER_UNIFORM_SAMPLER2D        // Shader uniform type: sampler2d
 // } ShaderUniformDataType;
 
+setUniformFloats :: String -> Array Float -> Shader -> Shader
+export setUniformFloats = setShaderValues(0)
+
+setUniformVec2s :: String -> Array Vector2 -> Shader -> Shader
+export setUniformVec2s = setShaderValues(1)
+
+setUniformVec3s :: String -> Array Vector3 -> Shader -> Shader
+export setUniformVec3s = setShaderValues(2)
+
+setUniformVec4s :: String -> Array Vector4 -> Shader -> Shader
+export setUniformVec4s = setShaderValues(3)
+
 setUniformFloat :: String -> Float -> Shader -> Shader
-export setUniformFloat = setShaderLocation(0)
+export setUniformFloat = setShaderValue(0)
 
 setUniformVec2 :: String -> Vector2 -> Shader -> Shader
-export setUniformVec2 = setShaderLocation(1)
+export setUniformVec2 = setShaderValue(1)
 
 setUniformVec3 :: String -> Vector3 -> Shader -> Shader
-export setUniformVec3 = setShaderLocation(2)
+export setUniformVec3 = setShaderValue(2)
 
 setUniformVec4 :: String -> Vector4 -> Shader -> Shader
-export setUniformVec4 = setShaderLocation(3)
+export setUniformVec4 = setShaderValue(3)
+
+setUniformShort :: String -> Short -> Shader -> Shader
+export setUniformShort = setShaderValue(4)
 
 setUniformTextureFFI :: Shader -> Short -> Texture -> {}
 setUniformTextureFFI = extern "madraylib__shader__setShaderValueTexture"

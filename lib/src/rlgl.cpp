@@ -1,12 +1,12 @@
 #ifndef GC_THREADS
   #define GC_THREADS
 #endif
+#include "gc.h"
 
 #include <raylib.h>
 #include <rlgl.h>
 #include <stdint.h>
 
-#include "gc.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -32,6 +32,18 @@ void madraylib__gl__setBlendFactorsSeparate(
     int32_t srcFactorAlpha, int32_t dstFactorAlpha, int32_t equationAlpha) {
   rlSetBlendFactorsSeparate(srcFactorColor, dstFactorColor, srcFactorAlpha,
                             dstFactorAlpha, equationColor, equationAlpha);
+}
+
+void madraylib__gl__enableDepthTest() {
+  rlEnableDepthTest();
+}
+
+void madraylib__gl__disableDepthTest() {
+  rlDisableDepthTest();
+}
+
+void madraylib__gl__clearScreenBuffers() {
+  rlClearScreenBuffers();
 }
 
 #ifdef __cplusplus

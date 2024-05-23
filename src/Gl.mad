@@ -171,3 +171,12 @@ export setBlendFactorsSeparate = (
   blendFactorToShort(dstFactorAlpha),
   blendFunctionToShort(equationAlpha),
 )
+
+enableDepthTest :: {} -> {}
+export enableDepthTest = extern "madraylib__gl__enableDepthTest"
+
+disableDepthTest :: {} -> {}
+export disableDepthTest = extern "madraylib__gl__disableDepthTest"
+
+clearScreenBuffers :: {} -> {}
+export clearScreenBuffers = extern "madraylib__gl__clearScreenBuffers"
