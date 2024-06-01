@@ -1,0 +1,5 @@
+import type { Vector3 } from "./Math"
+import type { Color } from "./Color"
+
+draw :: Vector3 -> Float -> Float -> Float -> Short -> Color -> {}
+export draw = extern "madraylib__cylinder__draw"

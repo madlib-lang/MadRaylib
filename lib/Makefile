@@ -12,6 +12,7 @@ OBJS :=\
   $(BUILDDIR)/circle.o                  \
   $(BUILDDIR)/collision.o               \
   $(BUILDDIR)/color.o                   \
+  $(BUILDDIR)/cylinder.o                \
   $(BUILDDIR)/draw.o                    \
   $(BUILDDIR)/file.o                    \
   $(BUILDDIR)/keyboard.o                \
