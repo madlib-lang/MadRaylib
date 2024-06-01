@@ -1,0 +1,47 @@
+import type { Color } from "./Color"
+import type { Texture } from "./Texture"
+import type { Shader } from "./Shader"
+import type { Vector3 } from "./Math"
+
+
+
+export alias MaterialMap = { color :: Color, texture :: Texture, value :: Float }
+
+export alias Material = { maps :: Array MaterialMap, params :: {}, shader :: Shader }
+
+export alias Mesh = {
+  animNormals :: {},
+  animVertices :: {},
+  boneIds :: {},
+  boneWeights :: {},
+  colors :: {},
+  indices :: {},
+  normals :: Array Float,
+  tangents :: {},
+  texcoords :: Array Float,
+  texcoords2 :: {},
+  triangleCount :: Short,
+  vaoId :: {},
+  vboId :: {},
+  vertexCount :: Short,
+  vertices :: Array Float,
+}
+
+export alias Model = {
+  bindPose :: {},
+  boneCount :: {},
+  bones :: {},
+  materialCount :: Short,
+  materials :: Array Material,
+  meshCount :: Short,
+  meshMaterial :: {},
+  meshes :: Array Mesh,
+  transform :: {},
+}
+
+
+load :: String -> Model
+export load = extern "madraylib__model__load"
+
+draw :: Model -> Vector3 -> Float -> Color -> {}
+export draw = extern "madraylib__model__draw"

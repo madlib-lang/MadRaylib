@@ -19,6 +19,7 @@ OBJS :=\
   $(BUILDDIR)/image.o                   \
   $(BUILDDIR)/line.o                    \
   $(BUILDDIR)/math.o                    \
+  $(BUILDDIR)/model.o                   \
   $(BUILDDIR)/mouse.o                   \
   $(BUILDDIR)/rlgl.o                    \
   $(BUILDDIR)/rectangle.o               \

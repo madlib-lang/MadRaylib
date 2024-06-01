@@ -1,0 +1,236 @@
+import Array from "Array"
+import Short from "Short"
+import Date from "Date"
+import Float from "Float"
+import List from "List"
+import Stream from "Stream"
+
+import Camera3D from "./Camera3D"
+import Camera2D from "./Camera2D"
+import Cylinder from "./Cylinder"
+import Draw from "./Draw"
+import Keyboard from "./Keyboard"
+import Mouse from "./Mouse"
+import Shader from "./Shader"
+import Window from "./Window"
+import Model from "./Model"
+
+import IO from "IO"
+
+
+// VFX_VS = `
+// #version 330
+
+// uniform mat4 mvp;
+
+// in vec4 vertexPosition;
+// in vec2 vertexTexCoord;
+
+// out vec2 uv;
+
+// void main() {
+//   gl_Position = mvp * vec4(vertexPosition.xyz, 1.0);
+//   uv = clamp(vertexTexCoord, 0.0, 1.0);
+// }
+// `
+
+// VFX_FS = `
+// #version 330
+
+// in vec2 uv;
+
+// out vec4 finalColor;
+
+
+
+
+// float random (in vec2 st) {
+//   return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
+// }
+
+// float noise (in vec2 st) {
+//   vec2 i = floor(st);
+//   vec2 f = fract(st);
+
+//   // Four corners in 2D of a tile
+//   float a = random(i);
+//   float b = random(i + vec2(1.0, 0.0));
+//   float c = random(i + vec2(0.0, 1.0));
+//   float d = random(i + vec2(1.0, 1.0));
+
+//   // Smooth Interpolation
+
+//   // Cubic Hermine Curve.  Same as SmoothStep()
+//   vec2 u = f*f*(3.0-2.0*f);
+//   // u = smoothstep(0.,1.,f);
+
+//   // Mix 4 coorners percentages
+//   return mix(a, b, u.x) +
+//           (c - a)* u.y * (1.0 - u.x) +
+//           (d - b) * u.x * u.y;
+// }
+
+// void main() {
+//   vec2 st = uv.xy/vec2(5.0, 5.0);
+//   vec2 pos = vec2(st*500.0);
+//   // float n = noise(pos);
+//   float n = cos(st.x);
+
+
+//   float gradientLTR = pow(uv.x, 3);
+//   float gradientRTL = 1 - uv.x;
+//   float gradientTTB = uv.y;
+//   float gradientBTT = 1 - uv.y;
+
+//   float c1 = clamp(cos(40 * uv.x), 0, 1);
+//   float c2 = clamp(cos(70 * uv.x), 0, 1);
+//   float c3 = clamp(cos(110 * uv.x), 0, 1);
+//   // float n2 = c1 / 3 + c2 / 3 + c3 / 3;
+//   float n2 = (c1 + c2 + c3) / 3;
+//   // float n2 = c1 ;
+
+//   // float n2 = n * gradientLTR * gradientRTL * gradientTTB * gradientBTT;
+//   // finalColor = vec4(uv.x, uv.y, 0.0, 1.0);
+//   finalColor = vec4(vec3(n2), 1.0);
+// }
+// `
+VFX_VS = `
+#version 330
+
+uniform mat4 mvp;
+
+in vec4 vertexPosition;
+in vec2 vertexTexCoord;
+
+out vec2 uv;
+
+void main() {
+  gl_Position = mvp * vec4(vertexPosition.xyz, 1.0);
+  uv = vertexTexCoord;
+}
+`
+
+VFX_FS = `
+#version 330
+
+uniform int millis;
+
+in vec2 uv;
+
+out vec4 finalColor;
+
+
+float random (in vec2 st) {
+  return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
+}
+
+float noise (in vec2 st) {
+  vec2 i = floor(st);
+  vec2 f = fract(st);
+
+  // Four corners in 2D of a tile
+  float a = random(i);
+  float b = random(i + vec2(1.0, 0.0));
+  float c = random(i + vec2(0.0, 1.0));
+  float d = random(i + vec2(1.0, 1.0));
+
+  // Smooth Interpolation
+
+  // Cubic Hermine Curve.  Same as SmoothStep()
+  vec2 u = f*f*(3.0-2.0*f);
+  // u = smoothstep(0.,1.,f);
+
+  // Mix 4 coorners percentages
+  return mix(a, b, u.x) +
+          (c - a)* u.y * (1.0 - u.x) +
+          (d - b) * u.x * u.y;
+}
+
+
+void main() {
+  float t = 1000 / abs(float(millis % 1000));
+  float gradientLTR = pow(uv.x, 4);
+  float gradientRTL = pow(1.0 - uv.x, 1.0);
+  float gradientTTB = pow(1 - uv.y, t);
+  float c1 = clamp(cos(uv.x * 80), 0, 1);
+  float c2 = clamp(cos(uv.x * 60), 0, 1);
+  // float c1 = clamp(cos(uv.x * 383), 0, 1);
+  // float c2 = clamp(cos(uv.x * 138), 0, 1);
+  vec3 color = vec3(1.0, 0.2, 0.0);
+
+  float fullGradient = gradientTTB * gradientLTR * gradientRTL * 10;
+
+  float n1 = noise(uv * 200) * (1 - gradientTTB) / 3;
+  float n2 = noise(uv * 50) * (1 - gradientTTB) / 10;
+  float n3 = noise(uv * 20) * (1 - gradientTTB) / 5;
+
+  finalColor = vec4(vec3(fullGradient + c1 * fullGradient * 0.3 + c2 * fullGradient * 0.3) * color * 2 - n1 - n2 - n3, 1.0);
+  // finalColor = vec4(vec3(n1), 1.0);
+}
+`
+
+main = () => {
+  WIDTH = 1024
+  HEIGHT = 768
+  Window.init(WIDTH, HEIGHT, "MadRaylib")
+
+  model = Model.load("./plane.obj")
+  IO.cTrace("model", model)
+
+  vfxShader = Shader.loadFromMemory(VFX_VS, VFX_FS)
+
+  camera = {
+    offset: { x: WIDTH / 2 - 160, y: HEIGHT / 2 - 160 },
+    rotation: 0,
+    target: { x: 0, y: 0 },
+    zoom: 1,
+  }
+  millisStart = Date.getTimestamp(Date.now())
+
+  i = 0
+
+  cancel = Stream.subscribe(
+    () => {},
+    () => {
+      i := i + 1
+      Window.pollInputEvents()
+      if (!Window.shouldClose()) do {
+        // Render
+        Draw.begin()
+        Draw.clearBackground({ r: 0, g: 0, b: 0, a: 255 })
+
+        Camera3D.begin3DMode({
+          fovy: 10,
+          projection: 0,
+          position: { x: 0, y: 300, z: 1 },
+          target: { x: 0, y: 0, z: 0 },
+          up: { x: 0, y: 1, z: 0 },
+        })
+        // Camera2D.begin2DMode(camera)
+        // Shader.beginShaderMode(vfxShader)
+        // Cylinder.draw({ x: 0, y: 0, z: 0.1 }, 10, 10, 5, 20, { r: 255, g: 255, b: 255, a: 255 })
+        dt = Date.getTimestamp(Date.now()) - millisStart
+
+        model.materials[0] := {
+          maps: model.materials[0].maps,
+          params: {},
+          shader: vfxShader,
+        }
+        Shader.setUniformShort("millis", Short.fromInteger(dt), vfxShader)
+        Model.draw(model, { x: 0, y: 0, z: 0 }, 8.0, { r: 255, g: 0, b: 0, a: 255 })
+
+        Shader.endShaderMode()
+        // Camera2D.end2DMode()
+        Camera3D.end3DMode()
+
+        Draw.endCustom()
+        Window.swapScreenBuffer()
+      } else do {
+        cancel()
+        Window.close()
+      }
+    },
+    () => {},
+    Stream.interval(30),
+  )
+}
