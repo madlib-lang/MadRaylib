@@ -46,6 +46,14 @@ void madraylib__gl__clearScreenBuffers() {
   rlClearScreenBuffers();
 }
 
+void madraylib__gl__enableBackfaceCulling() {
+  rlEnableBackfaceCulling();
+}
+
+void madraylib__gl__disableBackfaceCulling() {
+  rlDisableBackfaceCulling();
+}
+
 #ifdef __cplusplus
 }
 #endif

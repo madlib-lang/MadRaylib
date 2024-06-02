@@ -180,3 +180,9 @@ export disableDepthTest = extern "madraylib__gl__disableDepthTest"
 
 clearScreenBuffers :: {} -> {}
 export clearScreenBuffers = extern "madraylib__gl__clearScreenBuffers"
+
+enableBackfaceCulling :: {} -> {}
+export enableBackfaceCulling = extern "madraylib__gl__enableBackfaceCulling"
+
+disableBackfaceCulling :: {} -> {}
+export disableBackfaceCulling = extern "madraylib__gl__disableBackfaceCulling"
