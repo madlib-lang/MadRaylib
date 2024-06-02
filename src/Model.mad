@@ -45,3 +45,6 @@ export load = extern "madraylib__model__load"
 
 draw :: Model -> Vector3 -> Float -> Color -> {}
 export draw = extern "madraylib__model__draw"
+
+drawEx :: Model -> Vector3 -> Vector3 -> Float -> Vector3 -> Color -> {}
+export drawEx = extern "madraylib__model__drawEx"

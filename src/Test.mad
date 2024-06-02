@@ -11,9 +11,12 @@ import Cylinder from "./Cylinder"
 import Draw from "./Draw"
 import Keyboard from "./Keyboard"
 import Mouse from "./Mouse"
+import Gl from "./Gl"
 import Shader from "./Shader"
 import Window from "./Window"
 import Model from "./Model"
+import Texture from "./Texture"
+import RenderTexture from "./RenderTexture"
 
 import IO from "IO"
 
@@ -106,7 +109,9 @@ out vec2 uv;
 
 void main() {
   gl_Position = mvp * vec4(vertexPosition.xyz, 1.0);
+  // gl_Position.y *= 4;
   uv = vertexTexCoord;
+  // uv.x += 1;
 }
 `
 
@@ -148,24 +153,34 @@ float noise (in vec2 st) {
 
 
 void main() {
-  float t = 1000 / abs(float(millis % 1000));
-  float gradientLTR = pow(uv.x, 4);
-  float gradientRTL = pow(1.0 - uv.x, 1.0);
-  float gradientTTB = pow(1 - uv.y, t);
+  int duration = 4000;
+  vec2 st = vec2(uv.x / 6, uv.y);
+  float t = duration / abs(float(millis % duration));
+  float gradientLTR1 = pow(uv.x, 0.5);
+  float gradientRTL1 = pow(1 - uv.x, 2);
+  float gradientRTL2 = pow(1 - uv.x, 3);
+  float gradientBTT = pow(uv.y, 0.75);
+  float gradientTTB = pow(1 - uv.y, pow(t, 2) / 4);
+  float gradientTTB2 = pow(1 - uv.y, 2) * 4;
   float c1 = clamp(cos(uv.x * 80), 0, 1);
-  float c2 = clamp(cos(uv.x * 60), 0, 1);
-  // float c1 = clamp(cos(uv.x * 383), 0, 1);
-  // float c2 = clamp(cos(uv.x * 138), 0, 1);
-  vec3 color = vec3(1.0, 0.2, 0.0);
+  float c2 = clamp(cos(uv.x * 50), 0, 1);
+  
 
-  float fullGradient = gradientTTB * gradientLTR * gradientRTL * 10;
+  vec3 color1 = vec3(1.0, 0.2, 0.0);
+  vec3 color2 = vec3(1.0, 1.0, 1.0);
+  vec3 color = mix(color1, color2, gradientRTL2);
 
-  float n1 = noise(uv * 200) * (1 - gradientTTB) / 3;
-  float n2 = noise(uv * 50) * (1 - gradientTTB) / 10;
-  float n3 = noise(uv * 20) * (1 - gradientTTB) / 5;
+  float fullGradient = gradientTTB * gradientBTT * gradientLTR1 * gradientRTL1 * 10;
 
-  finalColor = vec4(vec3(fullGradient + c1 * fullGradient * 0.3 + c2 * fullGradient * 0.3) * color * 2 - n1 - n2 - n3, 1.0);
-  // finalColor = vec4(vec3(n1), 1.0);
+  float n1 = noise(st * 200) * (1 - gradientTTB / 1.2) / 3;
+  float n2 = noise(st * 100) * (1 - gradientTTB / 1.2) / 10;
+  float n3 = noise(st * 50) * (1 - gradientTTB / 1.2) / 5;
+  float n = n1 + n2 + n3;
+
+  finalColor = vec4(vec3(fullGradient + c1 * fullGradient * 0.5 + c2 * fullGradient * 0.5) * color - n, 1.0);
+  // finalColor = vec4(vec3(gradientTTB), 1.0);
+  // finalColor = vec4(1.0);
+  // finalColor = vec4(vec3((uv.x + 1) / 2), 1.0);
 }
 `
 
@@ -173,14 +188,20 @@ main = () => {
   WIDTH = 1024
   HEIGHT = 768
   Window.init(WIDTH, HEIGHT, "MadRaylib")
-
-  model = Model.load("./plane.obj")
-  IO.cTrace("model", model)
-
   vfxShader = Shader.loadFromMemory(VFX_VS, VFX_FS)
 
+  model = Model.load("./slash.obj")
+  model.materials[0] := {
+    maps: model.materials[0].maps,
+    params: {},
+    shader: vfxShader,
+  }
+  IO.cTrace("model", model)
+
+
   camera = {
-    offset: { x: WIDTH / 2 - 160, y: HEIGHT / 2 - 160 },
+    offset: { x: 0, y: 0 },
+    // offset: { x: WIDTH / 2, y: HEIGHT / 2 },
     rotation: 0,
     target: { x: 0, y: 0 },
     zoom: 1,
@@ -200,27 +221,20 @@ main = () => {
         Draw.clearBackground({ r: 0, g: 0, b: 0, a: 255 })
 
         Camera3D.begin3DMode({
-          fovy: 10,
-          projection: 0,
-          position: { x: 0, y: 300, z: 1 },
+          fovy: 768,
+          projection: 1,
+          position: { x: 0, y: 0, z: 800 },
           target: { x: 0, y: 0, z: 0 },
-          up: { x: 0, y: 1, z: 0 },
+          up: { x: 0, y: -1, z: 0 },
         })
-        // Camera2D.begin2DMode(camera)
-        // Shader.beginShaderMode(vfxShader)
-        // Cylinder.draw({ x: 0, y: 0, z: 0.1 }, 10, 10, 5, 20, { r: 255, g: 255, b: 255, a: 255 })
         dt = Date.getTimestamp(Date.now()) - millisStart
 
-        model.materials[0] := {
-          maps: model.materials[0].maps,
-          params: {},
-          shader: vfxShader,
-        }
+
         Shader.setUniformShort("millis", Short.fromInteger(dt), vfxShader)
-        Model.draw(model, { x: 0, y: 0, z: 0 }, 8.0, { r: 255, g: 0, b: 0, a: 255 })
+        Gl.rotatef(30, 0.0, 0.0, 1.0)
+        Model.draw(model, { x: 0, y: 0, z: 0 }, 1, { r: 0, g: 0, b: 0, a: 255 })
 
         Shader.endShaderMode()
-        // Camera2D.end2DMode()
         Camera3D.end3DMode()
 
         Draw.endCustom()

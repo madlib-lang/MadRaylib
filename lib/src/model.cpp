@@ -395,6 +395,12 @@ void madraylib__model__draw(madlib__record__Record_t *model, madlib__record__Rec
   DrawModel(madraylib__model__toRaylib(model), madraylib__math__vector3ToRaylib(position), scale, madraylib__color__toRaylib(color));
 }
 
+// void DrawModelEx(Model model, Vector3 position, Vector3 rotationAxis, float rotationAngle, Vector3 scale, Color tint);
+
+void madraylib__model__drawEx(madlib__record__Record_t *model, madlib__record__Record_t *position, madlib__record__Record_t *rotationAxis, double rotationAngle, madlib__record__Record_t *scale, madlib__record__Record_t *color) {
+  DrawModelEx(madraylib__model__toRaylib(model), madraylib__math__vector3ToRaylib(position), madraylib__math__vector3ToRaylib(rotationAxis), rotationAngle, madraylib__math__vector3ToRaylib(scale), madraylib__color__toRaylib(color));
+}
+
 #ifdef __cplusplus
 }
 #endif
