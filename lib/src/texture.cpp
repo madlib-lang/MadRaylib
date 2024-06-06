@@ -72,6 +72,12 @@ madlib__record__Record_t *madraylib__texture__unload(
   UnloadTexture(madraylib__texture__toRaylib(texture));
 }
 
+void madraylib__texture__generateMipmaps(madlib__record__Record_t *texture) {
+  Texture2D raylibTexture = madraylib__texture__toRaylib(texture);
+  GenTextureMipmaps(&raylibTexture);
+  texture->fields[3].value = (void*) raylibTexture.mipmaps;
+}
+
 void madraylib__texture__draw(madlib__record__Record_t *texture, double x,
                               double y, madlib__record__Record_t *color) {
   DrawTexture(madraylib__texture__toRaylib(texture), x, y,

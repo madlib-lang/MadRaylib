@@ -171,3 +171,6 @@ export enableEventWaiting = extern "madraylib__window__enableEventWaiting"
 
 disableEventWaiting :: {} -> {}
 export disableEventWaiting = extern "madraylib__window__disableEventWaiting"
+
+getTime :: {} -> Float
+export getTime = extern "madraylib__window__getTime"

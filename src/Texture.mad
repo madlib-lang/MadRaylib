@@ -57,6 +57,9 @@ export loadFromImage = extern "madraylib__texture__loadFromImage"
 unload :: Texture -> {}
 export unload = extern "madraylib__texture__unload"
 
+genMipmaps :: Texture -> {}
+export genMipmaps = extern "madraylib__texture__generateMipmaps"
+
 draw :: Texture -> Float -> Float -> Color -> {}
 export draw = extern "madraylib__texture__draw"
 

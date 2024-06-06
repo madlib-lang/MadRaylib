@@ -61,6 +61,9 @@ void madraylib__window__disableEventWaiting() {
   DisableEventWaiting();
 }
 
+double madraylib__window__getTime() {
+  return GetTime();
+}
 
 #ifdef __cplusplus
 }
